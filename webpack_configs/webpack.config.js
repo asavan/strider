@@ -37,6 +37,7 @@ const devConfig = () => {
             new CopyPlugin({
                 patterns: [
                     { from: "./src/images", to: "./images" },
+                    { from: "./data", to: "./data" },
                     { from: "./src/manifest.json", to: "./" },
                     { from: "./.well-known", to: "./.well-known" }
                 ],
