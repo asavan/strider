@@ -73,8 +73,6 @@ header {
     background-color: var(--back-color);
 }
 
-.container-img img {
-}
 .container-text {
     flex:1;
     align-items: center;
