@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --main-color: #F0F8FF;
+    --header-size: 10vh;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex: 0 0 auto;
+    height: 50px;
+    background: green;
+}
+
+header {
+    height: var(--header-size);
+    padding: 10px;
+    position: relative;
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: var(--header-size);
+  font-size: var(--header-size);
+  line-height: var(--header-size);
+}
+
+.left {
+    height: 100%;
+}
