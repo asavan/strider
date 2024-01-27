@@ -7,10 +7,11 @@
 :root {
     --main-color: #F0F8FF;
     --header-size: 5vw;
-    --footer-size: 13vw;
+    --footer-size: 18vw;
     --container-img-size: 10vw;
     --back-color: #F0F0F0;
     --link-color: #1B84C5;
+    --sim-color: #2273F8;
 }
 
 html,
@@ -51,6 +52,7 @@ footer {
     flex: 0 0 auto;
     height: var(--footer-size);
     padding-top: 5vw;
+    padding-bottom: 1vw;
     gap: 2vw;
 }
 
@@ -84,19 +86,19 @@ header {
 
 
 .message-to .date {
-    font-size: 3vw;
+    font-size: 3.5vw;
     font-family: system-ui;
-    color: #b4b4b4;
+    color: #8E8E8E;
 }
 
 .message-to img {
-    height: 4vw;
+    height: 5.5vw;
 }
 
 .header-text {
     height: var(--header-size);
     font-size: var(--header-size);
-    font-weight: 550;
+    font-weight: 500;
     font-family: system-ui;
     line-height: var(--header-size);
 }
@@ -120,11 +122,13 @@ header {
 }
 
 .message-text {
-    border-radius: 3vw;
-    padding: 2.5vw;
+    border-radius: 4vw;
+    padding: 4.5vw;
     font-size: 4vw;
     max-width: 70vw;
     min-width: 10vw;
+    font-family: sans-serif;
+    line-height: 1.3;
 }
 
 .green {
@@ -154,5 +158,5 @@ header {
     font-size: 4vw;
     border: none;
     outline: none;
-    caret-color: blue;
+    caret-color: #2273F8;
 }

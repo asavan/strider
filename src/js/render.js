@@ -39,6 +39,8 @@ function renderMessageFrom(message, template) {
 function fixScroll(document) {
     const objDiv = document.querySelector("main");
     objDiv.scrollTop = objDiv.scrollHeight;
+
+    document.querySelector("input").focus();
 }
 
 export default function renderMessage(message, document, el) {
