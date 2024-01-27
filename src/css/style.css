@@ -9,7 +9,8 @@
     --header-size: 5vw;
     --footer-size: 13vw;
     --container-img-size: 10vw;
-    --back-color: #f0f0f0;
+    --back-color: #F0F0F0;
+    --link-color: #1B84C5;
 }
 
 html,
@@ -62,6 +63,36 @@ header {
     justify-content: space-between;
 }
 
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.colorize {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+.message-to {
+    padding-top: 3vw;
+    padding-bottom: 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    align-items: end;
+}
+
+
+.message-to .date {
+    font-size: 3vw;
+    font-family: system-ui;
+    color: #b4b4b4;
+}
+
+.message-to img {
+    height: 4vw;
+}
+
 .header-text {
     height: var(--header-size);
     font-size: var(--header-size);
@@ -101,7 +132,7 @@ header {
 }
 
 .green {
-    background-color: #2fc071;
+    background-color: #2FC071;
     color: white;
 }
 

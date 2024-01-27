@@ -2,15 +2,35 @@ function escapeBr(text) {
     return text.replaceAll("\n", "<br>");
 }
 
+function chompCurrentYear(str) {
+    return str.replaceAll("." + new Date().getFullYear(), "");
+}
+
+function formatDateTime(date) {
+    const timeZone = "Europe/Belgrade";
+    const str = date.toLocaleString("ru-RU", { timeZone: timeZone });
+    const withoutComma = str.replaceAll(",", " ");
+    return chompCurrentYear(withoutComma).slice(0, -3);
+}
+
+function colorizeDigits(str) {
+    return str.replace(/([\d.]{4,})/g, "<span class='colorize'>$1</span>");
+}
+
 function renderMessageTo(message, template) {
     const el = template.content.cloneNode(true);
     el.querySelector(".message-text").textContent = message.text;
+    let date = message.date;
+    if (typeof message.date === "string") {
+        date = new Date(Date.parse(message.date));
+    }
+    el.querySelector(".date").textContent = formatDateTime(date);
     return el;
 }
 
 function renderMessageFrom(message, template) {
     const el = template.content.cloneNode(true);
-    const html = escapeBr(message.text);
+    const html = colorizeDigits(escapeBr(message.text));
     // console.log(html);
     el.querySelector(".message-text").innerHTML = html;
     return el;

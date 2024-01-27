@@ -1,20 +1,18 @@
 import renderMessage from "./render.js";
 
 function addMinutes(date, diff) {
-  return new Date(date.getTime() + diff*60000);
+    return new Date(date.getTime() + diff*60000);
 }
 
 function formatDate(date) {
-    return date.toLocaleDateString('en-CA');
+    const timeZone = "Europe/Belgrade";
+    const str = date.toLocaleDateString("ru-RU", { timeZone: timeZone });
+    return str;
 }
 
-function formatDateTime(date) {
-    const timeZone = "Europe/Belgrade";
-    return date.toLocaleString('en-US', { timeZone: timeZone });
-}
 
 function makeText(date, num) {
- return "U Beogradu, za broj telefona 381612655xxx, ste kupili DNEVNU KARTU U ZONI C(AB) po ceni od 150 din + osnovna cena poruke, koja vazi do " + formatDate(date) +" 00:00:00. \n" +
+    return "U Beogradu, za broj telefona 381612655xxx, ste kupili DNEVNU KARTU U ZONI C(AB) po ceni od 150 din + osnovna cena poruke, koja vazi do " + formatDate(date) +" 00:00:00. \n" +
  "Karta broj: 00" + num + ". \n" +
  "Placanjem operateru izmirujete dugovanja za ovu kartu prema JKP Naplata prevozne usluge Beograd. Sacuvajte ovu poruku.";
 }
@@ -42,7 +40,7 @@ function generate_impl() {
     return {
         "name": "last_trip",
         "messages" : [to, from]
-    }
+    };
 }
 
 export default async function generate(window, document) {
