@@ -35,8 +35,7 @@ body {
 main {
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden scroll;
     height: calc(100vh - 50vw);
     scrollbar-width: none;
 }
@@ -80,6 +79,7 @@ header {
     flex-direction: column;
     gap: 1vw;
     align-items: end;
+    align-self: end;
 }
 
 
@@ -124,10 +124,6 @@ header {
     padding: 2.5vw;
     font-size: 4vw;
     max-width: 70vw;
-}
-
-.message-to {
-    align-self: end;
     min-width: 10vw;
 }
 
