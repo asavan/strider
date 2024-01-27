@@ -61,6 +61,7 @@ function precache() {
     return caches.open(CACHE).then(function (cache) {
         return cache.addAll([
             "./",
+            "./data/default_sms.json",
             ...filesToCache
         ]);
     });
