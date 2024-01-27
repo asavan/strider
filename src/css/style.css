@@ -37,7 +37,7 @@ main {
     display: flex;
     flex-direction: column;
     overflow: hidden scroll;
-    height: calc(100vh - 50vw);
+    height: calc(100vh - 1000vw);
     scrollbar-width: none;
 }
 
