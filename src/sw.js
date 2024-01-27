@@ -1,6 +1,6 @@
 /* eslint-env serviceworker */
 
-const version = "1.0.0";
+const version = "0.0.2";
 const CACHE = "cache-only-" + version;
 
 self.addEventListener("install", function (evt) {
@@ -61,7 +61,6 @@ function precache() {
     return caches.open(CACHE).then(function (cache) {
         return cache.addAll([
             "./",
-            "./data/default_sms.json",
             ...filesToCache
         ]);
     });

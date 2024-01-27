@@ -14,7 +14,7 @@ function formatDateTime(date) {
 }
 
 function colorizeDigits(str) {
-    return str.replace(/([\d.]{4,})/g, "<span class='colorize'>$1</span>");
+    return str.replace(/([\d.]{4,}\d)/g, "<span class='colorize'>$1</span>");
 }
 
 function renderMessageTo(message, template) {
