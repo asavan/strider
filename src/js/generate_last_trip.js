@@ -1,21 +1,10 @@
 import renderMessage from "./render.js";
+import templateFunc from "./template.js";
 
 function addMinutes(date, diff) {
     return new Date(date.getTime() + diff*60000);
 }
 
-function formatDate(date) {
-    const timeZone = "Europe/Belgrade";
-    const str = date.toLocaleDateString("ru-RU", { timeZone: timeZone });
-    return str;
-}
-
-
-function makeText(date, num) {
-    return "U Beogradu, za broj telefona 381612655xxx, ste kupili DNEVNU KARTU U ZONI C(AB) po ceni od 150 din + osnovna cena poruke, koja vazi do " + formatDate(date) +" 00:00:00. \n" +
- "Karta broj: 00" + num + ". \n" +
- "Placanjem operateru izmirujete dugovanja za ovu kartu prema JKP Naplata prevozne usluge Beograd. Sacuvajte ovu poruku.";
-}
 
 function nextDate(date) {
     const tomorrow = new Date(date.getTime());
@@ -35,8 +24,9 @@ function calcNum(date) {
 
 function generate_impl() {
     const date = addMinutes(new Date(), -10);
+    const templater = templateFunc();
     const to = { text: "C1", date: date, direction: "to"};
-    const from = { text: makeText(nextDate(date), calcNum(date)), date: date, direction: "from"};
+    const from = { text: templater.C1(nextDate(date), calcNum(date)), date: date, direction: "from"};
     return {
         "name": "last_trip",
         "messages" : [to, from]

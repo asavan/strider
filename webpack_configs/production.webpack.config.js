@@ -69,8 +69,7 @@ const prodConfig = () => {
                     { from: "./src/images", to: "./images" },
                     { from: "./github", to: "./" },
                     { from: "./data", to: "./data" },
-                    { from: "./src/manifest.json", to: "./" },
-                    { from: "./.well-known", to: "./.well-known" }
+                    { from: "./src/manifest.json", to: "./" }
                 ],
             })
         ]

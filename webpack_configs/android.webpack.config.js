@@ -55,8 +55,7 @@ const aConfig = () => {
             new CopyPlugin({
                 patterns: [
                     { from: "./src/images", to: "./images" },
-                    { from: "./src/manifest.json", to: "./" },
-                    { from: "./.well-known", to: "./well-known" }
+                    { from: "./src/manifest.json", to: "./" }
                 ],
             })
         ]
