@@ -3,16 +3,6 @@ import assert from "node:assert/strict";
 
 import { DateTime } from "luxon";
 
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import timezone from 'dayjs/plugin/timezone.js';
-import utc from 'dayjs/plugin/utc.js';
-
-dayjs.extend(customParseFormat);
-dayjs.extend(utc);
-dayjs.extend(timezone);
-// import 'dayjs/locale/ru'; // load on demand
-
 function findLineByLeastSquares(values_x, values_y) {
     var x_sum = 0;
     var y_sum = 0;
@@ -28,7 +18,7 @@ function findLineByLeastSquares(values_x, values_y) {
     var values_length = values_x.length;
 
     if (values_length != values_y.length) {
-        throw new Error('The parameters values_x and values_y need to have same size!');
+        throw new Error("The parameters values_x and values_y need to have same size!");
     }
 
     /*
@@ -52,7 +42,7 @@ function findLineByLeastSquares(values_x, values_y) {
     }
 
     if (values_length != count) {
-            throw new Error('Count error');
+        throw new Error("Count error");
     }
 
     /*
@@ -67,31 +57,31 @@ function findLineByLeastSquares(values_x, values_y) {
 
 // https://www.freecodecamp.org/news/the-least-squares-regression-method-explained/
 function updateFormula(currentData) {
-  const pairsAmount = currentData.length;
-  const sum = currentData.reduce((acc, pair) => ({
-    x: acc.x + pair.x,
-    y: acc.y + pair.y,
-  }), { x: 0, y: 0 });
+    const pairsAmount = currentData.length;
+    const sum = currentData.reduce((acc, pair) => ({
+        x: acc.x + pair.x,
+        y: acc.y + pair.y,
+    }), { x: 0, y: 0 });
 
-  const average = {
-    x: sum.x / pairsAmount,
-    y: sum.y / pairsAmount,
-  };
+    const average = {
+        x: sum.x / pairsAmount,
+        y: sum.y / pairsAmount,
+    };
 
-  const slopeDividend = currentData
-    .reduce((acc, pair) => acc + ((pair.x - average.x) * (pair.y - average.y)), 0);
-  const slopeDivisor = currentData
-    .reduce((acc, pair) => acc + (pair.x - average.x) ** 2, 0);
+    const slopeDividend = currentData
+        .reduce((acc, pair) => acc + ((pair.x - average.x) * (pair.y - average.y)), 0);
+    const slopeDivisor = currentData
+        .reduce((acc, pair) => acc + (pair.x - average.x) ** 2, 0);
 
 
-  const slope = slopeDivisor !== 0
-    ? (slopeDividend / slopeDivisor)
-    : 0;
+    const slope = slopeDivisor !== 0
+        ? (slopeDividend / slopeDivisor)
+        : 0;
 
-  const coeficient = -(slope * average.x) + average.y;
+    const coeficient = -(slope * average.x) + average.y;
 
-  // console.log("updateFormula", sum, average, slopeDividend, slopeDivisor, slope, coeficient);
-  return [slope, coeficient];
+    // console.log("updateFormula", sum, average, slopeDividend, slopeDivisor, slope, coeficient);
+    return [slope, coeficient];
 }
 
 function arraysToObjects(arr1, arr2) {
@@ -179,7 +169,7 @@ function xiaomiSmsDec() {
 
 function smsIphone() {
     return [["27.08.2023 16:31:07", "18.11.2023 18:17:02", "23.11.2023 21:13:30", "24.11.2023 15:48:13", "29.11.2023 20:58:17", "29.11.2023 23:24:45", "02.12.2023 14:43:38", "06.12.2023 21:09:38", "24.12.2023 18:57:45"],
-    [3662458, 9875591, 10108091, 10137311, 10388703, 10390677, 10526383, 10741034, 11541941]];
+        [3662458, 9875591, 10108091, 10137311, 10388703, 10390677, 10526383, 10741034, 11541941]];
 }
 
 function late() {
@@ -222,21 +212,6 @@ test("toUnixTimeStamp", () => {
     assert.equal(result, tt);
 });
 
-test("dayjs_simple", () => {
-    const date1 = dayjs('15.10.2020', 'DD.MM.YYYY');
-    console.log(date1);
-});
-
-test("dayjs_parse", () => {
-    const dateStr = "17:54:28 24.01.2024";
-    const date1 = dayjs.tz(dateStr, 'HH:mm:ss DD.MM.YYYY', "Europe/Belgrade");
-    const timestamp = date1.valueOf();
-    const tt = timestamp / 1000;
-    const result = 1706115268;
-    assert.equal(result, tt);
-});
-
-
 function compare(dataFunc, d) {
     const [times, nums] = dataFunc();
     assert.equal(times.length, nums.length);
@@ -247,12 +222,12 @@ function compare(dataFunc, d) {
     const diff = res1 - res2;
     assert.ok(Math.abs(diff) < 2);
     // assert.equal(res1, res2);
-    console.log("compare", ans1, res1, res2, ans2);
+    // console.log("compare", ans1, res1, res2, ans2);
     return res1;
 }
 
 test("find_coeff", () => {
-    const [timesStr, nums] = screen3();
+    compare(screen3);
 });
 
 test("find_coeff2", () => {
