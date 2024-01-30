@@ -7,7 +7,7 @@ function chompCurrentYear(str) {
 }
 
 function formatDateTime(date) {
-    const timeZone = "Europe/Belgrade";
+    const timeZone = "Europe/Moscow";
     const str = date.toLocaleString("ru-RU", { timeZone: timeZone });
     const withoutComma = str.replaceAll(",", " ");
     return chompCurrentYear(withoutComma).slice(0, -3);

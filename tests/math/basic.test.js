@@ -120,6 +120,15 @@ function approx3Formula(date) {
     return numPrediction([x, -1000000000], date);
 }
 
+function screen0() {
+    const timesStr = [
+        "12:07:45 17.12.2023", "13:25:03 25.12.2023", "16:52:34 25.12.2023",
+        "18:27:47 28.12.2023", "19:59:10 28.12.2023"
+    ];
+    const nums = [11216758, 11578632, 11590838, 11783178, 11786318];
+    return [timesStr.map(toUnixTimeStamp), nums];
+}
+
 function screen1() {
     const timesStr = ["14:44:04 03.01.2024", "17:42:30 03.01.2024", "18:39:24 04.01.2024"];
     const nums = [11938989, 11947004, 11997135];
@@ -140,7 +149,7 @@ function screen3() {
 }
 
 function vicaApp() {
-    return chomp(merge(screen1, screen2, screen3), -1);
+    return chomp(merge(screen0, screen1, screen2, screen3), -1);
 }
 
 function chomp(arr, num) {
@@ -156,7 +165,10 @@ function chomp(arr, num) {
 }
 
 function xiaomiSms() {
-    const timesStr = ["14:38:00 10.09.2023", "08:01:18 03.11.2023", "18:25:55 12.11.2023", "11:40:00 24.12.2023", "13:24:06 25.12.2023", "14:43:13 03.01.2024"];
+    const timesStr = [
+        "14:38:00 10.09.2023", "08:01:18 03.11.2023", "18:25:55 12.11.2023",
+        "11:40:00 24.12.2023", "13:24:06 25.12.2023", "14:43:13 03.01.2024"
+    ];
     const nums = [5398935, 7592002, 9560065, 11530326, 11578485, 11938905];
     return [timesStr.map(toUnixTimeStamp), nums];
 }
@@ -166,8 +178,12 @@ function xiaomiSmsDec() {
 }
 
 function smsIphone() {
-    return [["27.08.2023 16:31:07", "18.11.2023 18:17:02", "23.11.2023 21:13:30", "24.11.2023 15:48:13", "29.11.2023 20:58:17", "29.11.2023 23:24:45", "02.12.2023 14:43:38", "06.12.2023 21:09:38", "24.12.2023 18:57:45"],
-        [3662458, 9875591, 10108091, 10137311, 10388703, 10390677, 10526383, 10741034, 11541941]];
+    return [
+        ["27.08.2023 16:31:07", "18.11.2023 18:17:02", "23.11.2023 21:13:30", "24.11.2023 15:48:13",
+            "29.11.2023 20:58:17", "29.11.2023 23:24:45", "02.12.2023 14:43:38", "06.12.2023 21:09:38",
+            "24.12.2023 18:57:45"],
+        [3662458, 9875591, 10108091, 10137311, 10388703, 10390677, 10526383, 10741034, 11541941]
+    ];
 }
 
 function late() {
@@ -179,7 +195,7 @@ function late2() {
 }
 
 function all() {
-    return merge(screen1, screen2, screen3, smsIphoneDates, xiaomiSms);
+    return merge(screen0, screen1, screen2, screen3, smsIphoneDates, xiaomiSms);
 }
 
 function minus90(str) {
@@ -206,6 +222,17 @@ function merge() {
     }
     return [timesStr, nums];
 }
+
+test("validLenAndType", () => {
+    for (const dataFunc of [screen0, screen1, screen2, xiaomiSms, smsIphoneDates, vicaApp, late, late2, all]) {
+        const [times, nums] = dataFunc();
+        assert.equal(times.length, nums.length);
+        for (let i = 0; i < times.length; ++i) {
+            assert.equal(typeof times[i], "number");
+            assert.equal(typeof nums[i], "number");
+        }
+    }
+});
 
 test("toUnixTimeStamp", () => {
     const dateStr = "17:54:28 24.01.2024";
@@ -234,7 +261,7 @@ test("find_coeff", () => {
 
 test("find_coeff2", () => {
     const d = new Date().getTime()/1000;
-    for (const f of [screen1, screen2, screen3, vicaApp, xiaomiSms, xiaomiSmsDec, late, all]) {
+    for (const f of [screen0, screen1, screen2, screen3, vicaApp, xiaomiSms, xiaomiSmsDec, late, all]) {
         compare(f, d);
     }
 });
@@ -275,14 +302,18 @@ test("find_coeff4", () => {
     const approx1 = f(approx1Formula);
     const approx2 = f(approx2Formula);
     const approx3 = f(approx3Formula);
-    console.log("find_coeff4", num, approx1, approx2, approx3, res1, res2);
+    console.log("find_coeff4", num-approx1, num-approx2, num-approx3, num - res1, num - res2);
 });
 
 test("find_coeff5", () => {
     const d = 1706115268;
     const num = 12847765;
     let ind = 0;
-    for (const f of [screen3, vicaApp, xiaomiSmsDec, late, late2, () => chomp(chomp(all(), 1), -1), () => chomp(all(), 1), () => chomp(all(), -1)]) {
+    for (const f of [screen3, vicaApp, xiaomiSmsDec, late, late2,
+        () => chomp(chomp(all(), 1), -1),
+        () => chomp(all(), 1),
+        () => chomp(all(), -1)
+    ]) {
         const res = compare(f, d);
         const diff = res - num;
         const percent = diff * 100 / num;
