@@ -32,8 +32,7 @@ self.addEventListener("fetch", function (evt) {
 function networkOrCache(request) {
     return fetch(request).then(function (response) {
         return response.ok ? response : fromCache(request);
-    })
-    .catch(function () {
+    }).catch(function () {
         return fromCache(request);
     });
 }
