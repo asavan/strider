@@ -1,6 +1,6 @@
 /* eslint-env serviceworker */
 
-const version = "0.0.3";
+const version = "0.0.4";
 const CACHE = "cache-only-" + version;
 
 self.addEventListener("install", function (evt) {
@@ -27,26 +27,16 @@ self.addEventListener("activate", function (evt) {
 
 self.addEventListener("fetch", function (evt) {
     evt.respondWith(networkOrCache(evt.request));
-    //     .catch(function () {
-    //     return useFallback();
-    // }));
 });
-
 
 function networkOrCache(request) {
     return fetch(request).then(function (response) {
         return response.ok ? response : fromCache(request);
     })
-        .catch(function () {
-            return fromCache(request);
-        });
+    .catch(function () {
+        return fromCache(request);
+    });
 }
-
-//function useFallback() {
-//    return caches.open(CACHE).then(function (cache) {
-//        return cache.match("./");
-//    });
-//}
 
 function fromCache(request) {
     return caches.open(CACHE).then(function (cache) {
