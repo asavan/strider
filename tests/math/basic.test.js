@@ -101,17 +101,10 @@ function toUnixTimeStamp(str) {
     return date.toUnixInteger();
 }
 
-function idealFormula(date) {
-    const x = 0.59365;
-    return numPrediction([x, -1000000000], date);
-}
-
 function approx1Formula(date) {
     const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
-    const diff1 = 11530326 - 0.49195 * (beginDate/1000);
-    const diff2 =  diff1;
-    console.log("diff", diff1, diff2);
-    return numPrediction([0.49195, diff2], date);
+    const diff = 11530326 - 0.49195 * (beginDate/1000);
+    return numPrediction([0.49195, diff], date);
 }
 
 function approx2Formula(date) {
@@ -120,6 +113,11 @@ function approx2Formula(date) {
     const diff2 = -840200000;
     console.log("diff2", diff1 - diff2);
     return numPrediction([0.5, diff2], date);
+}
+
+function approx3Formula(date) {
+    const x = 0.59365;
+    return numPrediction([x, -1000000000], date);
 }
 
 function screen1() {
@@ -176,6 +174,10 @@ function late() {
     return merge(vicaApp, () => chomp(smsIphoneDates(), 1), () => chomp(xiaomiSms(), 2));
 }
 
+function late2() {
+    return merge(screen2, screen3, () => chomp(smsIphoneDates(), 1), () => chomp(xiaomiSms(), 2));
+}
+
 function all() {
     return merge(screen1, screen2, screen3, smsIphoneDates, xiaomiSms);
 }
@@ -220,14 +222,14 @@ function compare(dataFunc, d) {
     const res1 = numPrediction(ans1, d);
     const res2 = numPrediction(ans2, d);
     const diff = res1 - res2;
+    console.log("compare", ans1, res1);
     assert.ok(Math.abs(diff) < 2);
     // assert.equal(res1, res2);
-    // console.log("compare", ans1, res1, res2, ans2);
     return res1;
 }
 
 test("find_coeff", () => {
-    compare(screen3);
+    compare(screen3, 1706115268);
 });
 
 test("find_coeff2", () => {
@@ -238,48 +240,56 @@ test("find_coeff2", () => {
 });
 
 test("find_coeff3", () => {
-    const [times, nums] = merge(vicaApp, smsIphoneDates, xiaomiSmsDec);
-    assert.equal(times.length, nums.length);
-    const ans1 = findLineByLeastSquares(times, nums);
-    const ans2 = updateFormula(arraysToObjects(times, nums));
     const d = new Date().getTime()/1000;
-    console.log("time", d);
-    const res1 = numPrediction(ans1, d);
-    const res2 = numPrediction(ans2, d);
-    assert.equal(res1, res2);
-    console.log(ans1, res1);
-    const diff = 13578124 - 13027823;
-    console.log(diff*100 / 13027823);
-    const ideal = idealFormula(d);
-    const approx1 = approx1Formula(d);
-    const approx2 = approx2Formula(d);
+    const test_func = () => late();
+
+    const num = approx2Formula(d);
+    const f = checkErrorSmall(d, num, 0.5);
+    const res1 = f((d) => compare(test_func, d));
+
+    const approx1 = f(approx1Formula);
+    const approx2 = f(approx2Formula);
+    const approx3 = f(approx3Formula);
     const allInfo = res1;
-    console.log("find_coeff3", ideal, approx1, approx2, allInfo);
+    console.log("find_coeff3", approx1, approx2, approx3, allInfo);
 });
 
+function checkErrorSmall(d, num, threshold) {
+    return (f) => {
+        const res = f(d);
+        const diff = res - num;
+        const percent = diff * 100 / num;
+        assert.ok(Math.abs(percent) < threshold);
+        return res;
+    };
+}
+
 test("find_coeff4", () => {
-    const [times, nums] = late();
-    assert.equal(times.length, nums.length);
-    const ans1 = findLineByLeastSquares(times, nums);
     const dateStr = "17:54:28 24.01.2024";
+    const num = 12847765;
     const d = toUnixTimeStamp(dateStr);
-    console.log("time", d);
-    const res1 = numPrediction(ans1, d);
-    console.log(ans1, res1);
-    const ideal = idealFormula(d);
-    const approx1 = approx1Formula(d);
-    const approx2 = approx2Formula(d);
-    console.log("find_coeff4", 12847765, ideal, approx1, approx2, res1);
+    const f = checkErrorSmall(d, num, 0.3);
+    const res1 = f((d) => compare(late, d));
+    const res2 = f((d) => compare(late2, d));
+    // const res3 = f((d) => compare(all, d));
+    const approx1 = f(approx1Formula);
+    const approx2 = f(approx2Formula);
+    const approx3 = f(approx3Formula);
+    console.log("find_coeff4", num, approx1, approx2, approx3, res1, res2);
 });
 
 test("find_coeff5", () => {
-    const dateStr = "17:54:28 24.01.2024";
-    const d = toUnixTimeStamp(dateStr);
+    const d = 1706115268;
     const num = 12847765;
-    for (const f of [screen1, screen2, screen3, vicaApp, xiaomiSms, xiaomiSmsDec, late, () => chomp(chomp(all(), 1), -1)]) {
+    let ind = 0;
+    for (const f of [screen3, vicaApp, xiaomiSmsDec, late, late2, () => chomp(chomp(all(), 1), -1), () => chomp(all(), 1), () => chomp(all(), -1)]) {
         const res = compare(f, d);
         const diff = res - num;
-        console.log(diff);
+        const percent = diff * 100 / num;
+        if (Math.abs(percent) >= 1) {
+            console.log("find_coeff5", diff, percent, ind);
+        }
+        ++ind;
     }
 });
 

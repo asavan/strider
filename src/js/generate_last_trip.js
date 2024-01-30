@@ -12,14 +12,12 @@ function nextDate(date) {
     return tomorrow;
 }
 
+function numPrediction(slope, b, x) {
+    return Math.floor(slope * x + b);
+}
+
 function calcNum(date) {
-    const beginNum = 11530326;
-    const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
-    const diff = date.getTime() - beginDate;
-    const magic = 0.49195; // (12847765-11530326) / (31*24*60*60);
-    const result = beginNum + Math.floor(magic * diff / 1000);
-    console.log(beginDate, diff, magic, result);
-    return result;
+    return numPrediction(0.5, -840200000, date.getTime()/1000);
 }
 
 function generate_impl() {

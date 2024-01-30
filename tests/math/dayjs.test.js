@@ -13,8 +13,8 @@ dayjs.extend(timezone);
 
 
 test("dayjs_simple", () => {
-    const date1 = dayjs("15.10.2020", "DD.MM.YYYY");
-    console.log(date1);
+    const date1 = dayjs("15.10.2020", "DD.MM.YYYY", true);
+    assert.ok(date1.isValid());
 });
 
 test("dayjs_parse", () => {
