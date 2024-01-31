@@ -1,30 +1,12 @@
 import renderMessage from "./render.js";
-import templateFunc from "./template.js";
+import emulatorFunc from "./logic.js";
 
-function addMinutes(date, diff) {
-    return new Date(date.getTime() + diff*60000);
-}
-
-
-function nextDate(date) {
-    const tomorrow = new Date(date.getTime());
-    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-    return tomorrow;
-}
-
-function numPrediction(slope, b, x) {
-    return Math.floor(slope * x + b);
-}
-
-function calcNum(date) {
-    return numPrediction(0.5, -840200000, date.getTime()/1000);
-}
 
 function c1Generate() {
-    const date = addMinutes(new Date(), -(2*60 + 15));
-    const templater = templateFunc();
+    const emulator = emulatorFunc();
+    const date = emulator.addMinutes(new Date(), -(2*60 + 15));
     const to = { text: "C1", date: date, direction: "to"};
-    const from = { text: templater.C1(nextDate(date), calcNum(date)), date: date, direction: "from"};
+    const from = { text: emulator.C1(date), date: date, direction: "from"};
     return {
         "name": "last_trip",
         "messages" : [to, from]
@@ -37,10 +19,10 @@ function cleanStorage() {
 }
 
 function a90Generate() {
-    const date = addMinutes(new Date(), -23);
-    const templater = templateFunc();
+    const emulator = emulatorFunc();
+    const date = emulator.addMinutes(new Date(), -23);
     const to = { text: "A90", date: date, direction: "to"};
-    const from = { text: templater.A90(addMinutes(date, 90), calcNum(date)), date: date, direction: "from"};
+    const from = { text: emulator.A90(date), date: date, direction: "from"};
     return {
         "name": "last_trip",
         "messages" : [to, from]
@@ -83,7 +65,8 @@ function getFromStorageOrGenerate(window) {
     if (data) {
         const parsedData = JSON.parse(data);
         const storageDate = new Date(Date.parse(parsedData.date));
-        if (addMinutes(storageDate, 1) > now) {
+        const emulator = emulatorFunc();
+        if (emulator.addMinutes(storageDate, 24) > now) {
             return parsedData.data;
         }
     }

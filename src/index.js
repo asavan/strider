@@ -1,6 +1,7 @@
 "use strict";
 import loader from "./js/load_default.js";
 import generate from "./js/generate_last_trip.js";
+import interaction from "./js/interactive.js";
 
 // eslint-disable-next-line no-undef
 if (__USE_SERVICE_WORKERS__) {
@@ -12,3 +13,4 @@ if (__USE_SERVICE_WORKERS__) {
 const dataUrl = "./data/default_sms.json";
 await loader(window, document, dataUrl);
 await generate(window, document);
+interaction(window, document);

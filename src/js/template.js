@@ -7,7 +7,7 @@ function serbianDate(date) {
 function serbianDateTime(date) {
     const timeZone = "Europe/Belgrade";
     const str = date.toLocaleString("ru-RU", { timeZone: timeZone });
-    return str;
+    return str.replaceAll(",", "");
 }
 
 function makeC1Text(date, num) {
@@ -17,11 +17,25 @@ function makeC1Text(date, num) {
 }
 
 function makeA90Text(date, num) {
-    return "U Beogradu, za broj telefona 381612655xxx, ste kupili VREMENSKU KARTU OD 90 MINUTA U ZONI A po ceni od 50 din + osnovna cena poruke, koja vazi do " + serbianDateTime(date) +".\n" +
-            "Karta broj: 00" + num + ". \n" +
-            "Placanjem operateru izmirujete dugovanja za ovu kartu prema JKP Naplata prevozne usluge Beograd. Sacuvajte ovu poruku.";
+    return "U Beogradu, za broj telefona 381612655xxx, "
+    + "ste kupili VREMENSKU KARTU OD 90 MINUTA U ZONI A po ceni od 50 din + osnovna cena poruke, koja vazi do " +
+    serbianDateTime(date) +".\n" +
+    "Karta broj: 00" + num + ". \n" +
+    "Placanjem operateru izmirujete dugovanja za ovu kartu prema JKP Naplata prevozne usluge Beograd. Sacuvajte ovu poruku.";
+}
+
+function makeC90Text(date, num) {
+    return "U Beogradu, za broj telefona 381612655xxx, " +
+    "ste kupili VREMENSKU KARTU OD 90 MINUTA U ZONI C(AB) po ceni od 100 din + osnovna cena poruke, koja vazi do " +
+    serbianDateTime(date) +".\n" +
+    "Karta broj: 00" + num + ". \n" +
+    "Placanjem operateru izmirujete dugovanja za ovu kartu prema JKP Naplata prevozne usluge Beograd. Sacuvajte ovu poruku.";
+}
+
+function Unknown() {
+    return "Sintaksna greska";
 }
 
 export default function templater() {
-    return {C1: makeC1Text, A90: makeA90Text};
+    return {C1: makeC1Text, A90: makeA90Text, C90: makeC90Text, Unknown};
 }
