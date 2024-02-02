@@ -25,6 +25,7 @@ async function processNormal(text, list, input, window, document, settings) {
     const date = new Date();
     const to = { text, date, direction: "to"};
     input.value = "";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
     renderMessage(to, document, list);
     await delay(getRandomArbitrary(settings.respDelayMin, settings.respDelayMax));
     if (settings.vibrate && window.navigator && window.navigator.vibrate) {

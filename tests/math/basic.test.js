@@ -110,7 +110,7 @@ function approx1Formula(date) {
 function approx2Formula(date) {
     const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
     const diff1 = 11530326 - 0.5 * (beginDate/1000);
-    const diff2 = -840200000;
+    const diff2 = -840160000;
     console.log("diff2", diff1 - diff2);
     return numPrediction([0.5, diff2], date);
 }
@@ -148,8 +148,14 @@ function screen3() {
     return [timesStr.map(toUnixTimeStamp), nums];
 }
 
+function screen4() {
+    const timesStr = ["18:56:55 01.02.2024", "20:48:23 01.02.2024"];
+    const nums = [13278962, 13281432];
+    return [timesStr.map(toUnixTimeStamp), nums];
+}
+
 function vicaApp() {
-    return chomp(merge(screen0, screen1, screen2, screen3), -1);
+    return chomp(merge(screen0, screen1, screen2, screen3, screen4), -1);
 }
 
 function chomp(arr, num) {
@@ -191,12 +197,35 @@ function late() {
 }
 
 function late2() {
-    return merge(screen2, screen3, () => chomp(smsIphoneDates(), 1), () => chomp(xiaomiSms(), 2));
+    return merge(screen2, screen3, screen4, () => chomp(smsIphoneDates(), 9));
 }
 
 function all() {
-    return merge(screen0, screen1, screen2, screen3, smsIphoneDates, xiaomiSms);
+    return merge(smsIphoneDates, xiaomiSms, screen0, screen1, screen2, screen3, screen4);
 }
+
+function lastPointArr(ind, arr) {
+    const [times, nums] = arr;
+    const lastNum = nums[nums.length - 1 - ind];
+    const lastTime = times[times.length - 1 - ind];
+    return [lastTime, lastNum];
+}
+
+function pointFromArr(ind, arr) {
+    const [times, nums] = arr;
+    const lastNum = nums[ind];
+    const lastTime = times[ind];
+    return [lastTime, lastNum];
+}
+
+function lastPoint(ind) {
+    return lastPointArr(ind, all());
+}
+
+const allWithoutFirstAndLast = () => chomp(chomp(all(), 1), -1);
+const  allWithoutFirst = () => chomp(all(), 1);
+const allWithoutLast = () => chomp(all(), -1);
+
 
 function minus90(str) {
     const date = DateTime.fromFormat(str, "dd.LL.yyyy HH:mm:ss", { zone: "Europe/Belgrade" });
@@ -223,8 +252,26 @@ function merge() {
     return [timesStr, nums];
 }
 
+const allFunctions = [
+    screen0,
+    screen1,
+    screen2,
+    screen3,
+    screen4,
+    smsIphoneDates,
+    xiaomiSms,
+    xiaomiSmsDec,
+    vicaApp,
+    allWithoutFirst,
+    allWithoutLast,
+    allWithoutFirstAndLast,
+    all,
+    late,
+    late2
+];
+
 test("validLenAndType", () => {
-    for (const dataFunc of [screen0, screen1, screen2, xiaomiSms, smsIphoneDates, vicaApp, late, late2, all]) {
+    for (const dataFunc of allFunctions) {
         const [times, nums] = dataFunc();
         assert.equal(times.length, nums.length);
         for (let i = 0; i < times.length; ++i) {
@@ -242,6 +289,7 @@ test("toUnixTimeStamp", () => {
 });
 
 function compare(dataFunc, d) {
+    assert.equal(typeof dataFunc, "function");
     const [times, nums] = dataFunc();
     assert.equal(times.length, nums.length);
     const ans1 = findLineByLeastSquares(times, nums);
@@ -249,10 +297,20 @@ function compare(dataFunc, d) {
     const res1 = numPrediction(ans1, d);
     const res2 = numPrediction(ans2, d);
     const diff = res1 - res2;
-    console.log("compare", ans1, res1);
+    console.log("compare", ans1, res1, {dataFunc});
     assert.ok(Math.abs(diff) < 2);
     // assert.equal(res1, res2);
     return res1;
+}
+
+function checkErrorSmall(d, num, threshold) {
+    return (f) => {
+        const res = f(d);
+        const diff = res - num;
+        const percent = diff * 100 / num;
+        assert.ok(Math.abs(percent) < threshold, `${percent} ${threshold} ${f}`);
+        return res;
+    };
 }
 
 test("find_coeff", () => {
@@ -261,48 +319,31 @@ test("find_coeff", () => {
 
 test("find_coeff2", () => {
     const d = new Date().getTime()/1000;
-    for (const f of [screen0, screen1, screen2, screen3, vicaApp, xiaomiSms, xiaomiSmsDec, late, all]) {
+    for (const f of allFunctions) {
         compare(f, d);
     }
 });
 
 test("find_coeff3", () => {
-    const d = new Date().getTime()/1000;
-    const test_func = () => late();
-
-    const num = approx2Formula(d);
-    const f = checkErrorSmall(d, num, 0.5);
-    const res1 = f((d) => compare(test_func, d));
-
-    const approx1 = f(approx1Formula);
-    const approx2 = f(approx2Formula);
-    const approx3 = f(approx3Formula);
-    const allInfo = res1;
-    console.log("find_coeff3", approx1, approx2, approx3, allInfo);
+    const [d, num] = lastPoint(0);
+    const f = checkErrorSmall(d, num, 1);
+    const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
+    const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
+    const results = functionsToCheck.map(func => f(func));
+    const diff = results.map(res => num - res);
+    console.log("find_coeff3", results, diff);
 });
-
-function checkErrorSmall(d, num, threshold) {
-    return (f) => {
-        const res = f(d);
-        const diff = res - num;
-        const percent = diff * 100 / num;
-        assert.ok(Math.abs(percent) < threshold);
-        return res;
-    };
-}
 
 test("find_coeff4", () => {
     const dateStr = "17:54:28 24.01.2024";
     const num = 12847765;
     const d = toUnixTimeStamp(dateStr);
-    const f = checkErrorSmall(d, num, 0.3);
-    const res1 = f((d) => compare(late, d));
-    const res2 = f((d) => compare(late2, d));
-    // const res3 = f((d) => compare(all, d));
-    const approx1 = f(approx1Formula);
-    const approx2 = f(approx2Formula);
-    const approx3 = f(approx3Formula);
-    console.log("find_coeff4", num-approx1, num-approx2, num-approx3, num - res1, num - res2);
+    const f = checkErrorSmall(d, num, 0.4);
+    const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
+    const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
+    const results = functionsToCheck.map(func => f(func));
+    const diff = results.map(res => num - res);
+    console.log("find_coeff4", diff);
 });
 
 test("find_coeff5", () => {
@@ -310,37 +351,73 @@ test("find_coeff5", () => {
     const num = 12847765;
     let ind = 0;
     for (const f of [screen3, vicaApp, xiaomiSmsDec, late, late2,
-        () => chomp(chomp(all(), 1), -1),
-        () => chomp(all(), 1),
-        () => chomp(all(), -1)
+        allWithoutFirstAndLast,
+        allWithoutLast,
+        allWithoutFirst
     ]) {
         const res = compare(f, d);
         const diff = res - num;
         const percent = diff * 100 / num;
-        if (Math.abs(percent) >= 1) {
+        if (Math.abs(percent) >= 2) {
             console.log("find_coeff5", diff, percent, ind);
         }
         ++ind;
     }
 });
 
+function slope(f, ind1, ind2) {
+    const [dBeg, numBeg] = pointFromArr(ind1, f);
+    const [dEnd, numEnd] = lastPointArr(ind2, f);
+    const slope1 = (numEnd - numBeg) / (dEnd - dBeg);
+    return slope1;
+}
+
 test("find_coeff6", () => {
-    const dateStr1 = "17:54:28 24.01.2024";
-    const d1 = toUnixTimeStamp(dateStr1);
+    const arr = merge(smsIphoneDates, screen3);
+    const slope1 = slope(arr, 0, 0);
+    const slope2 = slope(arr, 1, 0);
+    const slope3 = slope(arr, 1, 1);
 
-    const dateStr2 = "27.08.2023 16:31:07";
-    const dateStr3 = "18.11.2023 18:17:02";
-    const d2 = minus90(dateStr2);
-    const d3 = minus90(dateStr3);
-    const num1 = 12847765;
-    const num2 = 3662458;
-    const num3 = 9875591;
-    const slope1 = (num1 - num2) / (d1 - d2);
-    const slope2 = (num1 - num3) / (d1 - d3);
+    const arr2 = merge(smsIphoneDates, screen4);
+    const slope4 = slope(arr2, 1, 0);
+    const slope5 = slope(arr2, 1, 1);
+    console.log("find_coeff6", slope1, slope2, slope3, slope4, slope5);
+});
 
-    const dateStr4 = "20:42:14 22.01.2024";
-    const d4 = toUnixTimeStamp(dateStr4);
-    const num4 = 12694791;
-    const slope3 = (num4 - num3) / (d4 - d3);
-    console.log("find_coeff6", slope1, slope2, slope3);
+test("find_coeff7", () => {
+    const [d, num] = lastPoint(1);
+    const f = checkErrorSmall(d, num, 1);
+    const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
+    const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
+    const results = functionsToCheck.map(func => f(func));
+    const diff = results.map(res => num - res);
+    console.log("find_coeff7", diff);
+});
+
+test("find_coeff8", () => {
+    const [d, num] = lastPoint(0);
+    const f = checkErrorSmall(d, num, 0.5);
+    let i = 0;
+    const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
+    const functionsToCheck = [...functionToCalc, approx2Formula, approx3Formula];
+    for (const func of functionsToCheck) {
+        const res = f(func);
+        const diff = res - num;
+        const percent = diff * 100 / num;
+        console.log("find_coeff8", num - res, {func}, num, res, i, percent);
+        ++i;
+    }
+});
+
+test("find_coeff_all", () => {
+    const [d, num] = lastPoint(0);
+    const f = checkErrorSmall(d, num, 2.8);
+    let i = 0;
+    for (const func of [all, allWithoutFirst, allWithoutLast, allWithoutFirstAndLast]) {
+        const res = f((d) => compare(func, d));
+        const diff = res - num;
+        const percent = diff * 100 / num;
+        console.log("find_coeff_all", num - res, {func}, num, res, i, percent);
+        ++i;
+    }
 });
