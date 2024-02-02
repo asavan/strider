@@ -21,18 +21,21 @@ function router(text, dateInSms) {
     }
 }
 
-async function processNormal(text, list, input, document) {
+async function processNormal(text, list, input, window, document, settings) {
     const date = new Date();
     const to = { text, date, direction: "to"};
     input.value = "";
     renderMessage(to, document, list);
-    await delay(getRandomArbitrary(1000, 2000));
+    await delay(getRandomArbitrary(settings.respDelayMin, settings.respDelayMax));
+    if (settings.vibrate && window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate([200, 100, 200]);
+    }
     const textFrom = router(text, date);
     const from = { text: textFrom, date: new Date(), direction: "from"};
     renderMessage(from, document, list);
 }
 
-function processNumber(text) {
+function processNumber(text, window) {
     const num = parseInt(text.slice(2), 10);
     const emulator = emulatorFunc();
     const now = new Date();
@@ -68,7 +71,7 @@ function isValidNumber(text) {
     return true;
 }
 
-function onSend(e, document) {
+function onSend(e, window, document, settings) {
     e.preventDefault();
     const list = document.querySelector("main");
     const input = document.querySelector(".text-input");
@@ -77,15 +80,23 @@ function onSend(e, document) {
     }
     const text = input.value;
     if (isValidNumber(text)) {
-        return processNumber(text);
+        return processNumber(text, window);
     }
-    return processNormal(text, list, input, document);
+    return processNormal(text, list, input, window, document, settings);
 }
 
-export default function interaction(window, document) {
+function lightSendButton(e, sendBtn, input) {
+    if (!input.value) {
+        sendBtn.classList.remove("green");
+    } else {
+        sendBtn.classList.add("green");
+    }
+}
+
+export default function interaction(window, document, settings) {
     const sendBtn = document.querySelector(".send");
-    sendBtn.addEventListener("click", (e) => onSend(e, document));
+    sendBtn.addEventListener("click", (e) => onSend(e, window, document, settings));
 
     const input = document.querySelector(".text-input");
-    input.addEventListener("input", (event) => {console.log("input cha", event);});
+    input.addEventListener("input", (e) => lightSendButton(e, sendBtn, input));
 }
