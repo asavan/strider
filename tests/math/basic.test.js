@@ -108,10 +108,10 @@ function approx1Formula(date) {
 }
 
 function approx2Formula(date) {
-    const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
-    const diff1 = 11530326 - 0.5 * (beginDate/1000);
-    const diff2 = -840160000;
-    console.log("diff2", diff1 - diff2);
+    // const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
+    // const diff1 = 11530326 - 0.5 * (beginDate/1000);
+    const diff2 = -840180000;
+    // console.log("diff2", diff1 - diff2);
     return numPrediction([0.5, diff2], date);
 }
 
@@ -288,7 +288,7 @@ test("toUnixTimeStamp", () => {
     assert.equal(result, tt);
 });
 
-function compare(dataFunc, d) {
+function compare(dataFunc, d, needLog) {
     assert.equal(typeof dataFunc, "function");
     const [times, nums] = dataFunc();
     assert.equal(times.length, nums.length);
@@ -297,7 +297,9 @@ function compare(dataFunc, d) {
     const res1 = numPrediction(ans1, d);
     const res2 = numPrediction(ans2, d);
     const diff = res1 - res2;
-    console.log("compare", ans1, res1, {dataFunc});
+    if (needLog) {
+        console.log("compare", ans1, res1, {dataFunc});
+    }
     assert.ok(Math.abs(diff) < 2);
     // assert.equal(res1, res2);
     return res1;
@@ -314,31 +316,32 @@ function checkErrorSmall(d, num, threshold) {
 }
 
 test("find_coeff", () => {
-    compare(screen3, 1706115268);
+    const d = 1706115268;
+    const num = 12847765;
+    const checker = checkErrorSmall(d, num, 0.35);
+    checker((d) => compare(screen3, d));
 });
 
 test("find_coeff2", () => {
     const d = new Date().getTime()/1000;
     for (const f of allFunctions) {
-        compare(f, d);
+        compare(f, d, true);
     }
 });
 
 test("find_coeff3", () => {
     const [d, num] = lastPoint(0);
-    const f = checkErrorSmall(d, num, 1);
+    const f = checkErrorSmall(d, num, 0.5);
     const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
-    const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
+    const functionsToCheck = [...functionToCalc, approx2Formula, approx3Formula];
     const results = functionsToCheck.map(func => f(func));
     const diff = results.map(res => num - res);
     console.log("find_coeff3", results, diff);
 });
 
 test("find_coeff4", () => {
-    const dateStr = "17:54:28 24.01.2024";
-    const num = 12847765;
-    const d = toUnixTimeStamp(dateStr);
-    const f = checkErrorSmall(d, num, 0.4);
+    const [d, num] = lastPointArr(0, screen3());
+    const f = checkErrorSmall(d, num, 0.3);
     const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
     const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
     const results = functionsToCheck.map(func => f(func));
@@ -349,19 +352,12 @@ test("find_coeff4", () => {
 test("find_coeff5", () => {
     const d = 1706115268;
     const num = 12847765;
-    let ind = 0;
+    const checker = checkErrorSmall(d, num, 2);
     for (const f of [screen3, vicaApp, xiaomiSmsDec, late, late2,
         allWithoutFirstAndLast,
-        allWithoutLast,
         allWithoutFirst
     ]) {
-        const res = compare(f, d);
-        const diff = res - num;
-        const percent = diff * 100 / num;
-        if (Math.abs(percent) >= 2) {
-            console.log("find_coeff5", diff, percent, ind);
-        }
-        ++ind;
+        checker((d) => compare(f, d));
     }
 });
 
@@ -372,16 +368,17 @@ function slope(f, ind1, ind2) {
     return slope1;
 }
 
-test("find_coeff6", () => {
+test("find_slope", () => {
     const arr = merge(smsIphoneDates, screen3);
     const slope1 = slope(arr, 0, 0);
     const slope2 = slope(arr, 1, 0);
     const slope3 = slope(arr, 1, 1);
 
-    const arr2 = merge(smsIphoneDates, screen4);
-    const slope4 = slope(arr2, 1, 0);
-    const slope5 = slope(arr2, 1, 1);
-    console.log("find_coeff6", slope1, slope2, slope3, slope4, slope5);
+    const arr2 = all();
+    const slope4 = slope(arr2, 0, 0);
+    const slope5 = slope(arr2, 1, 0);
+    const slope6 = slope(arr2, 1, 1);
+    console.log("find_slope", slope1, slope2, slope3, slope4, slope5, slope6);
 });
 
 test("find_coeff7", () => {
