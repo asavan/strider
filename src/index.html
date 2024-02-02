@@ -12,19 +12,60 @@
     <link rel="apple-touch-icon" href="./images/favicon_full.ico">
 </head>
 <body>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none;">
+    <defs>
+        <g id="left-arrow">
+            <path d="M382.688,182.686H59.116l77.209-77.214c6.764-6.76,6.764-17.726,0-24.485c-6.764-6.764-17.73-6.764-24.484,0L5.073,187.757
+		c-6.764,6.76-6.764,17.727,0,24.485l106.768,106.775c3.381,3.383,7.812,5.072,12.242,5.072c4.43,0,8.861-1.689,12.242-5.072
+		c6.764-6.76,6.764-17.726,0-24.484l-77.209-77.218h323.572c9.562,0,17.316-7.753,17.316-17.315
+		C400.004,190.438,392.251,182.686,382.688,182.686z"/>
+        </g>
+
+        <g id="up-arrow">
+            <path d="M512 85.34016q18.00192 0 30.33088 12.32896l298.65984 298.65984q12.32896 12.32896 12.32896 30.33088 0 18.3296-12.16512 30.49472t-30.49472 12.16512q-18.00192 0-30.33088-12.32896l-225.66912-225.9968 0 665.00608q0 17.67424-12.4928 30.16704t-30.16704 12.4928-30.16704-12.4928-12.4928-30.16704l0-665.00608-225.66912 225.9968q-12.32896 12.32896-30.33088 12.32896-18.3296 0-30.49472-12.16512t-12.16512-30.49472q0-18.00192 12.32896-30.33088l298.65984-298.65984q12.32896-12.32896 30.33088-12.32896z"/>
+        </g>
+        <g id="dual-sim">
+            <path d="M640 85.333333l200.832 200.832a42.666667 42.666667 0 0 1 12.501333 30.165334V896a42.666667 42.666667 0 0 1-42.666666 42.666667H213.333333a42.666667 42.666667 0 0 1-42.666666-42.666667V128a42.666667 42.666667 0 0 1 42.666666-42.666667h426.666667z m-128 234.666667a128 128 0 0 0-127.786667 120.490667L384 448h85.333333a42.666667 42.666667 0 1 1 74.709334 28.16l-3.498667 3.541333L384 620.672V682.666667h256v-85.333334h-102.613333l60.245333-54.186666-0.256-0.426667 0.341333 0.341333A128 128 0 0 0 512 320z"/>
+        </g>
+        <g id="plus">
+            <path d="M914.049331 467.620233 554.92923 467.620233 554.92923 108.498086c0-24.334221-19.72525-44.028772-44.031842-44.028772-24.303522 0-44.031842 19.694551-44.031842 44.028772l0 359.122147L107.743398 467.620233c-24.303522 0-44.030819 19.72832-44.030819 44.031842 0 24.337291 19.727297 44.033889 44.030819 44.033889l359.122147 0 0 359.119077c0 24.335245 19.72832 44.031842 44.031842 44.031842 24.306592 0 44.031842-19.696598 44.031842-44.031842l0-359.119077 359.120101 0c24.305569 0 44.031842-19.696598 44.031842-44.033889C958.082196 487.348554 938.354899 467.620233 914.049331 467.620233z"/>
+        </g>
+    </defs>
+</svg>
 <header class="head">
-    <img class="left" src="images/left-arrow2.svg" alt="left"> <span class="header-text">9011</span> <span class="header-text"> </span>
+    <svg class="left" viewBox="0 0 400 400">
+        <use xlink:href="#left-arrow"></use>
+    </svg>
+    <span class="header-text">9011</span>
+    <span class="header-text"> </span>
 </header>
 <main class="content">
 </main>
 <footer>
-    <div class="plus container-img gray"><img src="images/plus-32.svg" alt="plus"></div>
-    <div class="container-text gray"><input class="text-input gray" placeholder="Текстовое сообщение" /><img src="images/dual-sim-2-fill-1.svg" alt="sim2"></div>
-    <div class="send container-img gray"><img src="images/arrow-up-50.svg" alt="send"></div>
+    <div class="plus container-img gray">
+        <svg class="left" viewBox="0 0 1024 1024">
+            <use xlink:href="#plus"></use>
+        </svg>
+    </div>
+    <div class="container-text gray"><input class="text-input gray" placeholder="Текстовое сообщение"/>
+        <svg class="container-text-img" viewBox="0 0 1024 1024">
+            <use xlink:href="#dual-sim"></use>
+        </svg>
+    </div>
+    <div class="send container-img gray">
+        <svg viewBox="0 0 1024 1024">
+            <use xlink:href="#up-arrow"></use>
+        </svg>
+    </div>
 </footer>
 <template id="message-to-tmpl">
     <div class="message-to">
-        <div class="row"><div class="date"></div> <img src="images/dual-sim-2-fill-2.svg" alt="sim2"></div>
+        <div class="row">
+            <div class="date"></div>
+            <svg class="message-to-img" viewBox="0 0 1024 1024">
+                <use xlink:href="#dual-sim"></use>
+            </svg>
+        </div>
         <div class="message-text green"></div>
     </div>
 </template>

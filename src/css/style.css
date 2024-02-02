@@ -13,6 +13,7 @@
     --link-color: #1B84C5;
     --sim-grey: #B5B5B5;
     --sim-color: #2273F8;
+    --light-gray: #AAA;
 }
 
 html,
@@ -58,8 +59,10 @@ footer {
 }
 
 header {
-    height: 13vw;
-    padding-bottom: 5vw;
+    height: 10vw;
+    padding-bottom: 4vw;
+    padding-left: 3vw;
+    padding-right: 10vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -74,6 +77,10 @@ header {
 .colorize {
     color: var(--link-color);
     text-decoration: underline;
+}
+
+svg {
+    fill: currentcolor;
 }
 
 .message-to {
@@ -93,8 +100,9 @@ header {
     color: #8E8E8E;
 }
 
-.message-to img {
+.message-to-img {
     height: 5.5vw;
+    color: var(--sim-grey);
     user-select: none;
 }
 
@@ -139,7 +147,7 @@ header {
 }
 
 .send {
-    color: blue;
+    color: var(--light-gray);
 }
 
 .green {
@@ -158,8 +166,9 @@ header {
     box-sizing: border-box;
 }
 
-.container-text img {
+.container-text-img {
     height: 4vw;
+    color: var(--sim-color);
 }
 
 .text-input {
@@ -170,4 +179,8 @@ header {
     border: none;
     outline: none;
     caret-color: hsl(217.3deg 93.9% 55.3% / 80%);
+}
+
+.text-input::placeholder {
+    color: var(--light-gray);
 }
