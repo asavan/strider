@@ -35,7 +35,7 @@ function allDec() {
     return arrObj.sortArr(arrObj.merge(iphoneObj.smsIphoneDec, xiaomiObj.xiaomiSmsDec, vicaObj.screenDec));
 }
 
-function late() {
+function allSinceNovWithoutLast() {
     return arrObj.chomp(arrObj.merge(allNov, allDec, allJan, allFeb), 1);
 }
 
@@ -50,6 +50,10 @@ function all() {
 const allWithoutFirst = () => arrObj.chomp(all(), 1);
 const allWithoutFirstAndLast = () => arrObj.chomp(allWithoutFirst(), -1);
 
+function lastPoint(ind) {
+    return arrObj.lastPointArr(ind, all());
+}
+
 const allFunctions = [
 //    allBegin,
 //    allNov,
@@ -61,11 +65,12 @@ const allFunctions = [
     all,
     allWithoutFirst,
     allWithoutFirstAndLast,
-    late,
+    allSinceNovWithoutLast,
     late2
 ];
 
 export default {
     allFunctions,
-    late2, late, all2024, allWithoutFirst, allWithoutFirstAndLast, all
-}
+    late2, allSinceNovWithoutLast, all2024, allWithoutFirst, allWithoutFirstAndLast, all,
+    lastPoint
+};

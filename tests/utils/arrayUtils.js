@@ -73,4 +73,4 @@ export default {
     arraysToObjects,
     merge,
     chomp
-}
+};

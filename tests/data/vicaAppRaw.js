@@ -38,4 +38,4 @@ export default {
     screen2,
     screen3,
     screenFeb
-}
+};
