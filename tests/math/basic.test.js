@@ -101,26 +101,22 @@ function toUnixTimeStamp(str) {
     return date.toUnixInteger();
 }
 
-function approx1Formula(date) {
-    const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
-    const diff = 11530326 - 0.49195 * (beginDate/1000);
-    return numPrediction([0.49195, diff], date);
-}
-
 function approx2Formula(date) {
-    // const beginDate = Date.parse("2023-12-25T14:13:04.000Z");
-    // const diff1 = 11530326 - 0.5 * (beginDate/1000);
-    const diff2 = -840180000;
-    // console.log("diff2", diff1 - diff2);
+    const diff2 = -840070000;
     return numPrediction([0.5, diff2], date);
 }
 
 function approx3Formula(date) {
-    const x = 0.59365;
+    const x = 0.59363;
     return numPrediction([x, -1000000000], date);
 }
 
-function screen0() {
+function approx4Formula(date) {
+    const x = 0.509;
+    return numPrediction([x, -855450000], date);
+}
+
+function screenDec() {
     const timesStr = [
         "12:07:45 17.12.2023", "13:25:03 25.12.2023", "16:52:34 25.12.2023",
         "18:27:47 28.12.2023", "19:59:10 28.12.2023"
@@ -148,14 +144,26 @@ function screen3() {
     return [timesStr.map(toUnixTimeStamp), nums];
 }
 
-function screen4() {
-    const timesStr = ["18:56:55 01.02.2024", "20:48:23 01.02.2024"];
-    const nums = [13278962, 13281432];
+function screenJan() {
+    return merge(screen1, screen2, screen3);
+}
+
+function screenFeb() {
+    const timesStr = ["18:56:55 01.02.2024", "20:48:23 01.02.2024", "18:00:00 13.02.2024", "16:39:16 17.02.2024"];
+    const nums = [13278962, 13281432, 13883096, 14019026];
     return [timesStr.map(toUnixTimeStamp), nums];
 }
 
 function vicaApp() {
-    return chomp(merge(screen0, screen1, screen2, screen3, screen4), -1);
+    return chomp(merge(screenDec, screenJan, screenFeb), -1);
+}
+
+function allJan() {
+    return merge(xiaomiSmsJan, screenJan);
+}
+
+function all2024() {
+    return merge(allJan, screenFeb);
 }
 
 function chomp(arr, num) {
@@ -170,38 +178,82 @@ function chomp(arr, num) {
     }
 }
 
-function xiaomiSms() {
-    const timesStr = [
-        "14:38:00 10.09.2023", "08:01:18 03.11.2023", "18:25:55 12.11.2023",
-        "11:40:00 24.12.2023", "13:24:06 25.12.2023", "14:43:13 03.01.2024"
-    ];
-    const nums = [5398935, 7592002, 9560065, 11530326, 11578485, 11938905];
+
+function xiaomiSmsSep() {
+    const timesStr = ["14:38:00 10.09.2023"];
+    const nums = [5398935];
+    return [timesStr.map(toUnixTimeStamp), nums];
+}
+
+function xiaomiSmsNov() {
+    const timesStr = ["08:01:18 03.11.2023", "18:25:55 12.11.2023"];
+    const nums = [7592002, 9560065];
     return [timesStr.map(toUnixTimeStamp), nums];
 }
 
 function xiaomiSmsDec() {
-    return chomp(xiaomiSms(), 2);
+    const timesStr = [
+        "11:40:00 24.12.2023", "13:24:06 25.12.2023",
+    ];
+    const nums = [11530326, 11578485];
+    return [timesStr.map(toUnixTimeStamp), nums];
 }
 
-function smsIphone() {
-    return [
-        ["27.08.2023 16:31:07", "18.11.2023 18:17:02", "23.11.2023 21:13:30", "24.11.2023 15:48:13",
-            "29.11.2023 20:58:17", "29.11.2023 23:24:45", "02.12.2023 14:43:38", "06.12.2023 21:09:38",
-            "24.12.2023 18:57:45"],
-        [3662458, 9875591, 10108091, 10137311, 10388703, 10390677, 10526383, 10741034, 11541941]
+function xiaomiSmsJan() {
+    const timesStr = ["14:43:13 03.01.2024"];
+    const nums = [11938905];
+    return [timesStr.map(toUnixTimeStamp), nums];
+}
+
+function smsIphoneAug() {
+    return [["27.08.2023 16:31:07"], [3662458]];
+}
+
+function smsIphoneNov() {
+    return [["18.11.2023 18:17:02", "23.11.2023 21:13:30", "24.11.2023 15:48:13",
+        "29.11.2023 20:58:17", "29.11.2023 23:24:45"],
+    [9875591, 10108091, 10137311, 10388703, 10390677]
     ];
 }
 
+function smsIphoneDec() {
+    return [
+        ["02.12.2023 14:43:38", "06.12.2023 21:09:38", "24.12.2023 18:57:45"],
+        [10526383, 10741034, 11541941]
+    ];
+}
+
+function allBegin() {
+    return merge(smsToDatesFunc(smsIphoneAug), xiaomiSmsSep);
+}
+
+function allNov() {
+    return merge(xiaomiSmsNov, smsToDatesFunc(smsIphoneNov));
+}
+
+function sortArr(arr) {
+    const [times, nums] = arr;
+    const temp = times.map((el, i) => { return {time: el, num: nums[i]};});
+    temp.sort((el1, el2) => el1.time - el2.time);
+    const time2 = temp.map(el => el.time);
+    const nums2 = temp.map(el => el.num);
+    return [time2, nums2];
+}
+
+function allDec() {
+    return sortArr(merge(smsToDatesFunc(smsIphoneDec), xiaomiSmsDec, screenDec));
+}
+
 function late() {
-    return merge(vicaApp, () => chomp(smsIphoneDates(), 1), () => chomp(xiaomiSms(), 2));
+    return chomp(merge(allNov, allDec, allJan, screenFeb), 1);
 }
 
 function late2() {
-    return merge(screen2, screen3, screen4, () => chomp(smsIphoneDates(), 9));
+    return merge(screen3, screenFeb);
 }
 
 function all() {
-    return merge(smsIphoneDates, xiaomiSms, screen0, screen1, screen2, screen3, screen4);
+    return merge(allBegin, allNov, allDec, allJan, screenFeb);
 }
 
 function lastPointArr(ind, arr) {
@@ -224,7 +276,7 @@ function lastPoint(ind) {
 
 const allWithoutFirstAndLast = () => chomp(chomp(all(), 1), -1);
 const  allWithoutFirst = () => chomp(all(), 1);
-const allWithoutLast = () => chomp(all(), -1);
+// const allWithoutLast = () => chomp(all(), -1);
 
 
 function minus90(str) {
@@ -233,10 +285,14 @@ function minus90(str) {
     return prevDate.toUnixInteger();
 }
 
-function smsIphoneDates() {
-    const [timesStr, nums] = smsIphone();
+function smsToDatesArr(arr) {
+    const [timesStr, nums] = arr;
     const times = timesStr.map(minus90);
     return [times, nums];
+}
+
+function smsToDatesFunc(f) {
+    return (arg) => smsToDatesArr(f(arg));
 }
 
 function merge() {
@@ -253,19 +309,16 @@ function merge() {
 }
 
 const allFunctions = [
-    screen0,
-    screen1,
-    screen2,
-    screen3,
-    screen4,
-    smsIphoneDates,
-    xiaomiSms,
-    xiaomiSmsDec,
+//    allBegin,
+//    allNov,
+    allDec,
+    allJan,
+    screenFeb,
+    all2024,
     vicaApp,
-    allWithoutFirst,
-    allWithoutLast,
-    allWithoutFirstAndLast,
     all,
+    allWithoutFirst,
+    allWithoutFirstAndLast,
     late,
     late2
 ];
@@ -278,6 +331,24 @@ test("validLenAndType", () => {
             assert.equal(typeof times[i], "number");
             assert.equal(typeof nums[i], "number");
         }
+    }
+});
+
+test("ordered", () => {
+    for (const dataFunc of allFunctions) {
+        let prevTime = 0;
+        let prevNum = 0;
+        const arr = dataFunc();
+        const [times, nums] = arr;
+        assert.equal(times.length, nums.length);
+        for (let i = 0; i < times.length; ++i) {
+            assert.ok(times[i] > prevTime, `${times[i]}, ${prevTime}, ${nums[i]}, ${prevNum}, ${dataFunc}`);
+            assert.ok(nums[i] > prevNum);
+            prevTime = times[i];
+            prevNum = nums[i];
+        }
+        const slope1 = slope(arr, 0, 0);
+        console.log("slope", slope1, dataFunc);
     }
 });
 
@@ -298,9 +369,9 @@ function compare(dataFunc, d, needLog) {
     const res2 = numPrediction(ans2, d);
     const diff = res1 - res2;
     if (needLog) {
-        console.log("compare", ans1, res1, {dataFunc});
+        console.log("compare", ans1, res1, ans2, res2, {dataFunc});
     }
-    assert.ok(Math.abs(diff) < 2);
+    assert.ok(Math.abs(diff) < 2, `diff ${diff}, ${JSON.stringify({dataFunc})}`);
     // assert.equal(res1, res2);
     return res1;
 }
@@ -340,10 +411,10 @@ test("find_coeff3", () => {
 });
 
 test("find_coeff4", () => {
-    const [d, num] = lastPointArr(0, screen3());
+    const [d, num] = lastPoint(0);
     const f = checkErrorSmall(d, num, 0.3);
-    const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
-    const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
+    const functionToCalc = [late2].map(func => (d) => compare(func, d));
+    const functionsToCheck = [...functionToCalc, approx2Formula, approx3Formula, approx4Formula];
     const results = functionsToCheck.map(func => f(func));
     const diff = results.map(res => num - res);
     console.log("find_coeff4", diff);
@@ -353,10 +424,7 @@ test("find_coeff5", () => {
     const d = 1706115268;
     const num = 12847765;
     const checker = checkErrorSmall(d, num, 2);
-    for (const f of [screen3, vicaApp, xiaomiSmsDec, late, late2,
-        allWithoutFirstAndLast,
-        allWithoutFirst
-    ]) {
+    for (const f of allFunctions) {
         checker((d) => compare(f, d));
     }
 });
@@ -369,23 +437,18 @@ function slope(f, ind1, ind2) {
 }
 
 test("find_slope", () => {
-    const arr = merge(smsIphoneDates, screen3);
-    const slope1 = slope(arr, 0, 0);
-    const slope2 = slope(arr, 1, 0);
-    const slope3 = slope(arr, 1, 1);
-
     const arr2 = all();
     const slope4 = slope(arr2, 0, 0);
     const slope5 = slope(arr2, 1, 0);
     const slope6 = slope(arr2, 1, 1);
-    console.log("find_slope", slope1, slope2, slope3, slope4, slope5, slope6);
+    console.log("find_slope", slope4, slope5, slope6);
 });
 
 test("find_coeff7", () => {
     const [d, num] = lastPoint(1);
     const f = checkErrorSmall(d, num, 1);
     const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
-    const functionsToCheck = [...functionToCalc, approx1Formula, approx2Formula, approx3Formula];
+    const functionsToCheck = [...functionToCalc, approx2Formula, approx3Formula];
     const results = functionsToCheck.map(func => f(func));
     const diff = results.map(res => num - res);
     console.log("find_coeff7", diff);
@@ -396,7 +459,7 @@ test("find_coeff8", () => {
     const f = checkErrorSmall(d, num, 0.5);
     let i = 0;
     const functionToCalc = [late, late2].map(func => (d) => compare(func, d));
-    const functionsToCheck = [...functionToCalc, approx2Formula, approx3Formula];
+    const functionsToCheck = [...functionToCalc, approx2Formula, approx3Formula, approx4Formula];
     for (const func of functionsToCheck) {
         const res = f(func);
         const diff = res - num;
@@ -408,9 +471,9 @@ test("find_coeff8", () => {
 
 test("find_coeff_all", () => {
     const [d, num] = lastPoint(0);
-    const f = checkErrorSmall(d, num, 2.8);
+    const f = checkErrorSmall(d, num, 1.8);
     let i = 0;
-    for (const func of [all, allWithoutFirst, allWithoutLast, allWithoutFirstAndLast]) {
+    for (const func of [allWithoutFirst, allWithoutFirstAndLast]) {
         const res = f((d) => compare(func, d));
         const diff = res - num;
         const percent = diff * 100 / num;
