@@ -40,7 +40,7 @@ function processNumber(text, window) {
     const num = parseInt(text.slice(2), 10);
     const emulator = emulatorFunc();
     const now = new Date();
-    const date = emulator.addMinutes(now, -(2*60 + 15));
+    const date = emulator.addMinutes(now, -15);
 
     const to = { text: "C1", date: date, direction: "to"};
     const from = { text: emulator.C1Custom(date, num), date: date, direction: "from"};
@@ -55,13 +55,13 @@ function processNumber(text, window) {
 }
 
 function isValidNumber(text) {
-    if (text.length < 10) {
+    if (text.length != 10) {
         return false;
     }
-    if (text[0] !== "0" || text[1] !== "0") {
+    if (text[0] !== "0") {
         return false;
     }
-    for (let i =0; i < text.length; ++i) {
+    for (let i = 0; i < text.length; ++i) {
         const symbol = text.charCodeAt(i);
         const asciiZero = 48; /* "0" */
         if (symbol < asciiZero  || symbol > (asciiZero + 9) ) {

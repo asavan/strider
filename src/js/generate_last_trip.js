@@ -59,14 +59,14 @@ function onPlusClick(document, list) {
     return preventClick(document, list, cleanStorage, 5);
 }
 
-function getFromStorageOrGenerate(window) {
+function getFromStorageOrGenerate(window, settings) {
     const data = window.sessionStorage.getItem("last_trip");
     const now = new Date();
     if (data) {
         const parsedData = JSON.parse(data);
         const storageDate = new Date(Date.parse(parsedData.date));
         const emulator = emulatorFunc();
-        if (emulator.addMinutes(storageDate, 24) > now) {
+        if (emulator.addMinutes(storageDate, settings.expireStorageMin) > now) {
             return parsedData.data;
         }
     }
@@ -76,9 +76,9 @@ function getFromStorageOrGenerate(window) {
     return newInfo;
 }
 
-export default async function generate(window, document) {
+export default async function generate(window, document, settings) {
     const list = document.querySelector("main");
-    generateAndRender(document, list, () => getFromStorageOrGenerate(window));
+    generateAndRender(document, list, () => getFromStorageOrGenerate(window, settings));
     {
         const backButton = document.querySelector(".left");
         const bClick = onBackClick(document, list);

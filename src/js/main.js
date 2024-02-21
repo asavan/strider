@@ -31,6 +31,6 @@ export default async function starter(window, document) {
     parseSettings(window, document, settings);
     const dataUrl = "./data/default_sms.json";
     await loader(window, document, dataUrl);
-    await generate(window, document);
+    await generate(window, document, settings);
     interaction(window, document, settings);
 }

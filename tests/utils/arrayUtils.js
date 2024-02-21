@@ -43,6 +43,18 @@ function chomp(arr, num) {
     }
 }
 
+function lastK(arr, k) {
+    if (k == 0) {
+        return [[], []];
+    }
+
+    const [times, nums] = arr;
+    if (k > 0) {
+        return [times.slice(-k), nums.slice(-k)];
+    }
+    return [times.slice(0, -k), nums.slice(0, -k)];
+}
+
 function merge() {
     let timesStr = [];
     let nums = [];
@@ -72,5 +84,6 @@ export default {
     sortArr,
     arraysToObjects,
     merge,
-    chomp
+    chomp,
+    lastK
 };

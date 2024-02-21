@@ -43,12 +43,20 @@ function late2() {
     return arrObj.merge(vicaObj.screen3, vicaObj.screenFeb);
 }
 
+function late3() {
+    return lastK(13);
+}
+
 function all() {
     return arrObj.merge(allBegin, allNov, allDec, allJan, allFeb);
 }
 
 const allWithoutFirst = () => arrObj.chomp(all(), 1);
 const allWithoutFirstAndLast = () => arrObj.chomp(allWithoutFirst(), -1);
+
+function lastK(k) {
+    return arrObj.lastK(all(), k);
+}
 
 function lastPoint(ind) {
     return arrObj.lastPointArr(ind, all());
@@ -66,11 +74,13 @@ const allFunctions = [
     allWithoutFirst,
     allWithoutFirstAndLast,
     allSinceNovWithoutLast,
-    late2
+    late2,
+    late3
 ];
 
 export default {
     allFunctions,
-    late2, allSinceNovWithoutLast, all2024, allWithoutFirst, allWithoutFirstAndLast, all,
-    lastPoint
+    late2, allSinceNovWithoutLast, all2024,
+    allWithoutFirst, allWithoutFirstAndLast, all,
+    lastPoint, lastK, allBegin, late3
 };

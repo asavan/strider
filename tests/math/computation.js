@@ -1,13 +1,26 @@
 import mathObj from "./math.js";
 import arrObj from "../utils/arrayUtils.js";
 
-function regressByFunc(dataFunc, needLog) {
-    const [times, nums] = dataFunc();
+function regressByArr(arr, label) {
+    const [times, nums] = arr;
     const ans1 = mathObj.findLineByLeastSquares(times, nums);
-    if (needLog) {
-        console.log("regressByFunc", ans1, dataFunc);
+    if (label) {
+        console.log("regressByArr", ans1, label);
     }
     return (d) => mathObj.numPrediction(ans1, d);
+}
+
+function findZero(arr) {
+    const [times, nums] = arr;
+    const coeff = mathObj.findLineByLeastSquares(times, nums);
+    const timestamp = - (coeff[1]/ coeff[0]);
+    const date = new Date(Math.floor(timestamp * 1000));
+    console.log("findZero", date);
+    return timestamp;
+}
+
+function regressByFunc(dataFunc, label) {
+    return regressByArr(dataFunc(), label);
 }
 
 function regressByFunc2(dataFunc, needLog) {
@@ -44,6 +57,8 @@ function approx4Formula(date) {
 export default {
     regressByFunc,
     regressByFunc2,
+    regressByArr,
+    findZero,
     slope,
     approx2Formula,
     approx3Formula,
