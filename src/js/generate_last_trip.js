@@ -2,9 +2,18 @@ import renderMessage from "./render.js";
 import emulatorFunc from "./logic.js";
 
 
-function c1Generate() {
-    const emulator = emulatorFunc();
-    const date = emulator.addMinutes(new Date(), -(2*60 + 15));
+function calcSmsDate(now, addMinutes) {
+    const dayBegin = new Date(now.getTime());
+    dayBegin.setHours(0,0,0,0);
+
+    const date = addMinutes(now, -(2*60 + 15));
+    if (date < dayBegin) {
+        return addMinutes(now, -15);
+    }
+    return date;
+}
+
+function c1Generate(emulator, date) {
     const to = { text: "C1", date: date, direction: "to"};
     const from = { text: emulator.C1(date), date: date, direction: "from"};
     return {
@@ -61,16 +70,16 @@ function onPlusClick(document, list) {
 
 function getFromStorageOrGenerate(window, settings) {
     const data = window.sessionStorage.getItem("last_trip");
+    const emulator = emulatorFunc();
     const now = new Date();
     if (data) {
         const parsedData = JSON.parse(data);
         const storageDate = new Date(Date.parse(parsedData.date));
-        const emulator = emulatorFunc();
         if (emulator.addMinutes(storageDate, settings.expireStorageMin) > now) {
             return parsedData.data;
         }
     }
-    const newInfo = c1Generate();
+    const newInfo = c1Generate(emulator, calcSmsDate(now, emulator.addMinutes));
     const toSave = {data: newInfo, date: now};
     window.sessionStorage.setItem("last_trip", JSON.stringify(toSave));
     return newInfo;
