@@ -66,6 +66,11 @@ function lastPoint(ind) {
     return arrObj.lastPointArr(ind, all());
 }
 
+function normalizeAug(func) {
+    const beginDate = Date.parse("2024-01-01T00:00:00Z") / 1000;
+    return arrObj.transformTimeFunc(t => t - beginDate)(func);
+}
+
 const allFunctions = [
 //    allBegin,
 //    allNov,
@@ -87,5 +92,5 @@ export default {
     allFunctions,
     late2, allSinceNov, allSinceNovWithoutLast, all2024,
     allWithoutFirst, allWithoutFirstAndLast, all,
-    lastPoint, lastK, allBegin, late3
+    lastPoint, lastK, allBegin, late3, normalizeAug
 };

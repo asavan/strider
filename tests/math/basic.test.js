@@ -102,6 +102,27 @@ test("lastTwoKnownPoints", () => {
     }
 });
 
+test("lastTwoKnownPoints2", () => {
+    const allAug = dataObj.normalizeAug(dataObj.all)();
+    const functionToCalc = [dataObj.late3, dataObj.all2024, dataObj.allSinceNovWithoutLast, dataObj.allSinceNov];
+    const maxErrors = [0.5, 0.4, 0.5, 0.8];
+
+    for (let i = 0; i < 2; ++i) {
+        const [d, num] = arrObj.lastPointArr(i, allAug);
+        const results = functionToCalc.map((f, ind) => {
+            const checker = checkErrorSmall(d, num, maxErrors[ind]);
+            return checker(compObj.regressByFunc(dataObj.normalizeAug(f), f.name));
+        });
+        const diff = results.map(res => num - res);
+        const percents = results.map(res => {
+            const diff1 = num - res;
+            const percent = diff1 * 100 / num;
+            return percent;
+        });
+        console.log("lastTwoKnownPoints2", results, diff, percents, num);
+    }
+});
+
 test("approxFormula", () => {
     const maxError = 0.1;
     const functionsToCheck = [compObj.approx2Formula, compObj.approx3Formula, compObj.approx4Formula, compObj.approx5Formula];
