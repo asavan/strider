@@ -55,6 +55,10 @@ test("ordered", () => {
     }
 });
 
+test("lastPoint", () => {
+    console.log("lastPoint", dataObj.lastPoint(0));
+});
+
 test("slope", () => {
     for (const dataFunc of dataObj.allFunctions) {
         const slope = compObj.slope(dataFunc(), 0, 0);
@@ -78,9 +82,10 @@ test("results_now", () => {
 });
 
 test("lastTwoKnownPoints", () => {
-    const functionToCalc = [dataObj.late2, dataObj.all2024, dataObj.allSinceNovWithoutLast, dataObj.allWithoutFirst,
+    const functionToCalc = [dataObj.late2, dataObj.late3, dataObj.all2024, dataObj.allSinceNovWithoutLast, dataObj.allWithoutFirst,
         dataObj.allWithoutFirstAndLast, dataObj.all];
-    const maxErrors = [0.3, 0.5, 0.8, 1.6, 1.8, 3];
+    const maxErrors = [0.55, 0.4, 0.5, 0.8, 1.6, 1.8, 3];
+
     for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const results = functionToCalc.map((f, ind) => {
@@ -88,24 +93,29 @@ test("lastTwoKnownPoints", () => {
             return checker(compObj.regressByFunc(f));
         });
         const diff = results.map(res => num - res);
-        console.log("lastTwoKnownPoints", results, diff);
+        const percents = results.map(res => {
+            const diff1 = num - res;
+            const percent = diff1 * 100 / num;
+            return percent;
+        });
+        console.log("lastTwoKnownPoints", results, diff, percents, num);
     }
 });
 
 test("approxFormula", () => {
-    const maxError = 0.3;
-    const functionsToCheck = [compObj.approx2Formula, compObj.approx3Formula, compObj.approx4Formula];
+    const maxError = 0.1;
+    const functionsToCheck = [compObj.approx2Formula, compObj.approx3Formula, compObj.approx4Formula, compObj.approx5Formula];
     for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
         const results = functionsToCheck.map(checker);
         const diff = results.map(res => num - res);
         const percents = results.map(res => {
-            const diff1 = res - num;
+            const diff1 = num - res;
             const percent = diff1 * 100 / num;
             return percent;
         });
-        console.log("approxFormula", diff, percents);
+        console.log("approxFormula", results, diff, percents);
     }
 });
 

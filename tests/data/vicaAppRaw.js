@@ -34,10 +34,18 @@ function screenFeb() {
     ];
 }
 
+function screenFeb2() {
+    return [
+        ["09:45:57 20.02.2024", "11:17:19 20.02.2024"],
+        [14120058, 14125493]
+    ];
+}
+
 export default {
     screenDec,
     screen1,
     screen2,
     screen3,
-    screenFeb
+    screenFeb,
+    screenFeb2
 };

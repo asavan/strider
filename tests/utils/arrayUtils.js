@@ -39,7 +39,7 @@ function chomp(arr, num) {
         return [times.slice(0, num), nums.slice(0, num)];
     } else {
         console.error("No Chomp");
-        return arr;
+        return [...arr];
     }
 }
 
@@ -63,6 +63,9 @@ function merge() {
             const [timesStr1, nums1] = arguments[i]();
             timesStr = timesStr.concat(timesStr1);
             nums = nums.concat(nums1);
+        } else {
+            console.error("Bad name", arguments[i]);
+            throw new TypeError("Bad function");
         }
     }
     return [timesStr, nums];

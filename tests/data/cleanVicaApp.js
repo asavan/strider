@@ -9,5 +9,6 @@ export default {
     screen1: conv(rawObj.screen1),
     screen2: conv(rawObj.screen2),
     screen3: conv(rawObj.screen3),
-    screenFeb: conv(rawObj.screenFeb)
+    screenFeb: conv(rawObj.screenFeb),
+    screenFeb2: conv(rawObj.screenFeb2)
 };

@@ -8,11 +8,11 @@ function screenJan() {
 }
 
 function allFeb() {
-    return vicaObj.screenFeb();
+    return arrObj.merge(vicaObj.screenFeb, vicaObj.screenFeb2);
 }
 
 function vicaApp() {
-    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, vicaObj.screenFeb), -1);
+    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, vicaObj.screenFeb, vicaObj.screenFeb2), -1);
 }
 
 function allJan() {
@@ -35,8 +35,12 @@ function allDec() {
     return arrObj.sortArr(arrObj.merge(iphoneObj.smsIphoneDec, xiaomiObj.xiaomiSmsDec, vicaObj.screenDec));
 }
 
+function allSinceNov() {
+    return arrObj.merge(allNov, allDec, allJan, allFeb);
+}
+
 function allSinceNovWithoutLast() {
-    return arrObj.chomp(arrObj.merge(allNov, allDec, allJan, allFeb), 1);
+    return arrObj.chomp(allSinceNov(), 1);
 }
 
 function late2() {
@@ -74,13 +78,14 @@ const allFunctions = [
     allWithoutFirst,
     allWithoutFirstAndLast,
     allSinceNovWithoutLast,
+    allSinceNov,
     late2,
     late3
 ];
 
 export default {
     allFunctions,
-    late2, allSinceNovWithoutLast, all2024,
+    late2, allSinceNov, allSinceNovWithoutLast, all2024,
     allWithoutFirst, allWithoutFirstAndLast, all,
     lastPoint, lastK, allBegin, late3
 };
