@@ -40,7 +40,7 @@ function slope(f, ind1, ind2) {
 }
 
 function approx2Formula(date) {
-    const diff2 = -840080000;
+    const diff2 = -840050000;
     return mathObj.numPrediction([0.5, diff2], date);
 }
 
@@ -51,12 +51,12 @@ function approx3Formula(date) {
 
 function approx4Formula(date) {
     const x = 0.509;
-    return mathObj.numPrediction([x, -855470000], date);
+    return mathObj.numPrediction([x, -855450000], date);
 }
 
 function approx5Formula(date) {
     const x = 0.53;
-    return mathObj.numPrediction([x, -891350000], date);
+    return mathObj.numPrediction([x, -891315000], date);
 }
 
 export default {

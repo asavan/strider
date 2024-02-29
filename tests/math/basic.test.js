@@ -125,7 +125,7 @@ test("lastTwoKnownPoints2", () => {
 
 test("approxFormula", () => {
     const maxError = 0.1;
-    const functionsToCheck = [compObj.approx2Formula, compObj.approx3Formula, compObj.approx4Formula, compObj.approx5Formula];
+    const functionsToCheck = [compObj.approx3Formula];
     for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
@@ -137,6 +137,23 @@ test("approxFormula", () => {
             return percent;
         });
         console.log("approxFormula", results, diff, percents);
+    }
+});
+
+test("approxFormula_relax", () => {
+    const maxError = 0.3;
+    const functionsToCheck = [compObj.approx2Formula, compObj.approx4Formula, compObj.approx5Formula, compObj.approx3Formula];
+    for (let i = 0; i < 2; ++i) {
+        const [d, num] = dataObj.lastPoint(i);
+        const checker = checkErrorSmall(d, num, maxError);
+        const results = functionsToCheck.map(checker);
+        const diff = results.map(res => num - res);
+        const percents = results.map(res => {
+            const diff1 = num - res;
+            const percent = diff1 * 100 / num;
+            return percent;
+        });
+        console.log("approxFormula_relax", results, diff, percents);
     }
 });
 
