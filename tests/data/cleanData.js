@@ -11,8 +11,12 @@ function allFeb() {
     return arrObj.merge(vicaObj.screenFeb, vicaObj.screenFeb2);
 }
 
+function allMach() {
+    return arrObj.merge(vicaObj.screenMarch);
+}
+
 function vicaApp() {
-    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, vicaObj.screenFeb, vicaObj.screenFeb2), -1);
+    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, vicaObj.screenFeb, vicaObj.screenFeb2, vicaObj.screenMarch), -1);
 }
 
 function allJan() {
@@ -20,7 +24,7 @@ function allJan() {
 }
 
 function all2024() {
-    return arrObj.merge(allJan, allFeb);
+    return arrObj.merge(allJan, allFeb, allMach);
 }
 
 function allBegin() {
@@ -36,7 +40,7 @@ function allDec() {
 }
 
 function allSinceNov() {
-    return arrObj.merge(allNov, allDec, allJan, allFeb);
+    return arrObj.merge(allNov, allDec, allJan, allFeb, allMach);
 }
 
 function allSinceNovWithoutLast() {
@@ -44,7 +48,7 @@ function allSinceNovWithoutLast() {
 }
 
 function late2() {
-    return arrObj.merge(vicaObj.screen3, vicaObj.screenFeb);
+    return arrObj.merge(allFeb, allMach);
 }
 
 function late3() {
@@ -52,7 +56,7 @@ function late3() {
 }
 
 function all() {
-    return arrObj.merge(allBegin, allNov, allDec, allJan, allFeb);
+    return arrObj.merge(allBegin, allNov, allDec, allJan, allFeb, allMach);
 }
 
 const allWithoutFirst = () => arrObj.chomp(all(), 1);

@@ -41,11 +41,19 @@ function screenFeb2() {
     ];
 }
 
+function screenMarch() {
+    return [
+        ["17:09:13 08.03.2024"],
+        [15048773]
+    ];
+}
+
 export default {
     screenDec,
     screen1,
     screen2,
     screen3,
     screenFeb,
-    screenFeb2
+    screenFeb2,
+    screenMarch
 };
