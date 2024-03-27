@@ -76,7 +76,7 @@ test("find_coeff", () => {
 test("results_now", () => {
     const d = new Date().getTime()/1000;
     const functionToCalc = dataObj.allFunctions.map(f => compObj.regressByFunc(f, f.name));
-    const functionsToCheck = [...functionToCalc, compObj.approx2Formula, compObj.approx3Formula, compObj.approx4Formula];
+    const functionsToCheck = [...functionToCalc, compObj.approx3Formula, compObj.approx5Formula];
     const results = functionsToCheck.map(f => f(d));
     console.log("results_now", results);
 });
@@ -142,7 +142,7 @@ test("approxFormula", () => {
 
 test("approxFormula_relax", () => {
     const maxError = 0.7;
-    const functionsToCheck = [compObj.approx2Formula, compObj.approx4Formula, compObj.approx5Formula, compObj.approx3Formula];
+    const functionsToCheck = [compObj.approx5Formula, compObj.approx3Formula];
     for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);

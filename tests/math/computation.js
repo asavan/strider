@@ -49,14 +49,9 @@ function approx3Formula(date) {
     return mathObj.numPrediction([x, -1000000000], date);
 }
 
-function approx4Formula(date) {
-    const x = 0.509;
-    return mathObj.numPrediction([x, -855400000], date);
-}
-
 function approx5Formula(date) {
     const x = 0.53;
-    return mathObj.numPrediction([x, -891300000], date);
+    return mathObj.numPrediction([x, -891200000], date);
 }
 
 export default {
@@ -65,8 +60,6 @@ export default {
     regressByArr,
     findZero,
     slope,
-    approx2Formula,
     approx3Formula,
-    approx4Formula,
     approx5Formula
 };

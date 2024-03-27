@@ -48,6 +48,20 @@ function screenMarch() {
     ];
 }
 
+function screenMarch2() {
+    return [
+        ["17:45:43 11.03.2024", "19:29:29 11.03.2024", "18:01:09 14.03.2024", "11:35:56 16.03.2024"],
+        [15167639, 15171637, 15342860, 15421122]
+    ];
+}
+
+function screenMarch3() {
+    return [
+        ["11:58:37 17.03.2024", "16:44:35 17.03.2024", "16:55:36 23.03.2024", "20:03:24 23.03.2024"],
+        [15447838, 15455848, 15806870, 15811876]
+    ];
+}
+
 export default {
     screenDec,
     screen1,
@@ -55,5 +69,7 @@ export default {
     screen3,
     screenFeb,
     screenFeb2,
-    screenMarch
+    screenMarch,
+    screenMarch2,
+    screenMarch3
 };

@@ -11,5 +11,7 @@ export default {
     screen3: conv(rawObj.screen3),
     screenFeb: conv(rawObj.screenFeb),
     screenFeb2: conv(rawObj.screenFeb2),
-    screenMarch: conv(rawObj.screenMarch)
+    screenMarch: conv(rawObj.screenMarch),
+    screenMarch2: conv(rawObj.screenMarch2),
+    screenMarch3: conv(rawObj.screenMarch3)
 };
