@@ -39,11 +39,6 @@ function slope(f, ind1, ind2) {
     return slope1;
 }
 
-function approx2Formula(date) {
-    const diff2 = -840000000;
-    return mathObj.numPrediction([0.5, diff2], date);
-}
-
 function approx3Formula(date) {
     const x = 0.59360;
     return mathObj.numPrediction([x, -1000000000], date);
