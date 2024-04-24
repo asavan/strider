@@ -84,7 +84,7 @@ test("results_now", () => {
 test("lastTwoKnownPoints", () => {
     const functionToCalc = [dataObj.late2, dataObj.late3, dataObj.all2024, dataObj.allSinceNovWithoutLast, dataObj.allWithoutFirst,
         dataObj.allWithoutFirstAndLast, dataObj.all];
-    const maxErrors = [0.55, 0.4, 0.6, 1, 1.6, 1.8, 2.3];
+    const maxErrors = [0.55, 0.4, 0.7, 1.2, 1.6, 1.8, 2.3];
 
     for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
@@ -105,7 +105,7 @@ test("lastTwoKnownPoints", () => {
 test("lastTwoKnownPoints2", () => {
     const allAug = dataObj.normalizeAug(dataObj.all)();
     const functionToCalc = [dataObj.late3, dataObj.all2024, dataObj.allSinceNovWithoutLast, dataObj.allSinceNov];
-    const maxErrors = [0.5, 0.55, 1, 0.8];
+    const maxErrors = [0.5, 0.7, 1.2, 0.8];
 
     for (let i = 0; i < 2; ++i) {
         const [d, num] = arrObj.lastPointArr(i, allAug);

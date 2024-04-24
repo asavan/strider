@@ -62,6 +62,13 @@ function screenMarch3() {
     ];
 }
 
+function screenApril() {
+    return [
+        ["07:59:34 09.04.2024", "13:43:40 11.04.2024", "20:09:46 18.04.2024", "18:45:09 20.04.2024"],
+        [16675622, 16828294, 17205049, 17300086]
+    ];
+}
+
 export default {
     screenDec,
     screen1,
@@ -71,5 +78,6 @@ export default {
     screenFeb2,
     screenMarch,
     screenMarch2,
-    screenMarch3
+    screenMarch3,
+    screenApril
 };
