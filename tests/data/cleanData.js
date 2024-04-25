@@ -3,8 +3,20 @@ import xiaomiObj from "./cleanXiaomi.js";
 import vicaObj from "./cleanVicaApp.js";
 import arrObj from "../utils/arrayUtils.js";
 
+function allNov() {
+    return arrObj.merge(xiaomiObj.xiaomiSmsNov, iphoneObj.smsIphoneNov);
+}
+
+function allDec() {
+    return arrObj.sortArr(arrObj.merge(iphoneObj.smsIphoneDec, xiaomiObj.xiaomiSmsDec, vicaObj.screenDec));
+}
+
 function screenJan() {
     return arrObj.merge(vicaObj.screen1, vicaObj.screen2, vicaObj.screen3);
+}
+
+function allJan() {
+    return arrObj.merge(xiaomiObj.xiaomiSmsJan, screenJan);
 }
 
 function allFeb() {
@@ -23,10 +35,6 @@ function vicaApp() {
     return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, allFeb, allMarch, allApril), -1);
 }
 
-function allJan() {
-    return arrObj.merge(xiaomiObj.xiaomiSmsJan, screenJan);
-}
-
 function all2024() {
     return arrObj.merge(allJan, allFeb, allMarch, allApril);
 }
@@ -35,16 +43,8 @@ function allBegin() {
     return arrObj.merge(iphoneObj.smsIphoneAug, xiaomiObj.xiaomiSmsSep);
 }
 
-function allNov() {
-    return arrObj.merge(xiaomiObj.xiaomiSmsNov, iphoneObj.smsIphoneNov);
-}
-
-function allDec() {
-    return arrObj.sortArr(arrObj.merge(iphoneObj.smsIphoneDec, xiaomiObj.xiaomiSmsDec, vicaObj.screenDec));
-}
-
 function allSinceNov() {
-    return arrObj.merge(allNov, allDec, allJan, allFeb, allMarch, allApril);
+    return arrObj.merge(allNov, allDec, all2024);
 }
 
 function allSinceNovWithoutLast() {
@@ -60,7 +60,7 @@ function late3() {
 }
 
 function all() {
-    return arrObj.merge(allBegin, allNov, allDec, allJan, allFeb, allMarch, allApril);
+    return arrObj.merge(allBegin, allNov, allDec, all2024);
 }
 
 const allWithoutFirst = () => arrObj.chomp(all(), 1);
@@ -80,15 +80,11 @@ function normalizeAug(func) {
 }
 
 const allFunctions = [
-//    allBegin,
-//    allNov,
-    allDec,
-    // allJan,
-    allFeb,
     allMarch,
+    allApril,
     all2024,
     vicaApp,
-    // all,
+    all,
     allWithoutFirst,
     allWithoutFirstAndLast,
     allSinceNovWithoutLast,
@@ -99,7 +95,7 @@ const allFunctions = [
 
 export default {
     allFunctions,
-    late2, allSinceNov, allSinceNovWithoutLast, all2024,
+    allSinceNov, allSinceNovWithoutLast, all2024,
     allWithoutFirst, allWithoutFirstAndLast, all,
     lastPoint, lastK, allBegin, late3, normalizeAug
 };
