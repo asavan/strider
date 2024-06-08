@@ -19,24 +19,12 @@ function allJan() {
     return arrObj.merge(xiaomiObj.xiaomiSmsJan, screenJan);
 }
 
-function allFeb() {
-    return arrObj.merge(vicaObj.screenFeb, vicaObj.screenFeb2);
-}
-
-function allMarch() {
-    return arrObj.merge(vicaObj.screenMarch, vicaObj.screenMarch2, vicaObj.screenMarch3);
-}
-
-function allApril() {
-    return arrObj.merge(vicaObj.screenApril);
-}
-
 function vicaApp() {
-    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, allFeb, allMarch, allApril), -1);
+    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, vicaObj.allAfterFeb), -1);
 }
 
 function all2024() {
-    return arrObj.merge(allJan, allFeb, allMarch, allApril);
+    return arrObj.merge(allJan, vicaObj.allAfterFeb);
 }
 
 function allBegin() {
@@ -49,10 +37,6 @@ function allSinceNov() {
 
 function allSinceNovWithoutLast() {
     return arrObj.chomp(allSinceNov(), 1);
-}
-
-function late2() {
-    return arrObj.merge(allMarch, allApril);
 }
 
 function late3() {
@@ -80,8 +64,6 @@ function normalizeAug(func) {
 }
 
 const allFunctions = [
-    allMarch,
-    allApril,
     all2024,
     vicaApp,
     all,
@@ -89,7 +71,6 @@ const allFunctions = [
     allWithoutFirstAndLast,
     allSinceNovWithoutLast,
     allSinceNov,
-    late2,
     late3
 ];
 

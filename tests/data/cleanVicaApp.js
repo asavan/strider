@@ -14,5 +14,6 @@ export default {
     screenMarch: conv(rawObj.screenMarch),
     screenMarch2: conv(rawObj.screenMarch2),
     screenMarch3: conv(rawObj.screenMarch3),
-    screenApril: conv(rawObj.screenApril)
+    screenApril: conv(rawObj.screenApril),
+    allAfterFeb: conv(() => arrObj.merge(...rawObj.allAfterFeb))
 };

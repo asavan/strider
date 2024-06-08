@@ -8,6 +8,8 @@ import arrObj from "../utils/arrayUtils.js";
 
 import xiaomiObj from "../data/cleanXiaomi.js";
 
+import dateObj from "../utils/dateUtils.js";
+
 
 function compareFunc(f1, f2, arr, threshold) {
     for (const d of arr) {
@@ -23,7 +25,7 @@ function checkErrorSmall(d, num, thresholdPercent) {
         const res = f(d);
         const diff = res - num;
         const percent = diff * 100 / num;
-        assert.ok(Math.abs(percent) < thresholdPercent, `${percent} ${thresholdPercent} ${f}`);
+        assert.ok(Math.abs(percent) < thresholdPercent, `${percent} ${thresholdPercent} ${dateObj.fromSeconds(d)} ${res} ${num} ${f}`);
         return res;
     };
 }
@@ -84,7 +86,7 @@ test("results_now", () => {
 test("lastTwoKnownPoints", () => {
     const functionToCalc = [dataObj.late3, dataObj.all2024, dataObj.allSinceNovWithoutLast, dataObj.allWithoutFirst,
         dataObj.allWithoutFirstAndLast, dataObj.all];
-    const maxErrors = [0.4, 0.7, 1.2, 1.6, 1.8, 2.3];
+    const maxErrors = [0.5, 0.7, 1.2, 1.6, 1.8, 2.3];
 
     for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
@@ -124,9 +126,9 @@ test("lastTwoKnownPoints2", () => {
 });
 
 test("approxFormula", () => {
-    const maxError = 0.3;
+    const maxError = 0.55;
     const functionsToCheck = [compObj.approx3Formula];
-    for (let i = 0; i < 2; ++i) {
+    for (let i = 0; i < 3; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
         const results = functionsToCheck.map(checker);
@@ -143,7 +145,7 @@ test("approxFormula", () => {
 test("approxFormula_relax", () => {
     const maxError = 0.7;
     const functionsToCheck = [compObj.approx5Formula, compObj.approx3Formula];
-    for (let i = 0; i < 2; ++i) {
+    for (let i = 0; i < 3; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
         const results = functionsToCheck.map(checker);

@@ -69,6 +69,23 @@ function screenApril() {
     ];
 }
 
+function screenJune() {
+    return [
+        ["09:13:38 02.06.2024"],
+        [19306689]
+    ];
+}
+
+const allAfterFeb = [
+    screenFeb,
+    screenFeb2,
+    screenMarch,
+    screenMarch2,
+    screenMarch3,
+    screenApril,
+    screenJune
+];
+
 export default {
     screenDec,
     screen1,
@@ -79,5 +96,6 @@ export default {
     screenMarch,
     screenMarch2,
     screenMarch3,
-    screenApril
+    screenApril,
+    allAfterFeb
 };
