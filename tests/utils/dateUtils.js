@@ -7,7 +7,7 @@ function toUnixTimeStamp(str) {
         err.info = {
             date: str,
             reason: date.invalidReason
-        }
+        };
         throw err;
     }
     return date.toUnixInteger();
@@ -20,7 +20,7 @@ function minus90(str) {
         err.info = {
             date: str,
             reason: date.invalidReason
-        }
+        };
         throw err;
     }
     const prevDate = date.plus({minutes: -90});
@@ -29,7 +29,7 @@ function minus90(str) {
 
 function fromSeconds(num) {
     const myDateTime = DateTime.fromSeconds(num);
-    const myDateTimeISO = myDateTime.setZone("Europe/Belgrade").toFormat('dd.LL.yyyy HH:mm:ss');;
+    const myDateTimeISO = myDateTime.setZone("Europe/Belgrade").toFormat("dd.LL.yyyy HH:mm:ss");
     return myDateTimeISO;
 }
 

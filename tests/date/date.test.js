@@ -13,11 +13,11 @@ test("toUnixTimeStamp", () => {
 test("toUnixTimeStampBad", () => {
     const dateStr = "17:54:88 24.01.2024";
     assert.throws(() => dateObj.toUnixTimeStamp(dateStr), {
-        name: 'Error',
-        message: 'Bad date',
+        name: "Error",
+        message: "Bad date",
         info: {
             date: "17:54:88 24.01.2024",
-            reason: 'unit out of range',
+            reason: "unit out of range",
         },
     }
     );
