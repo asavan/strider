@@ -69,7 +69,7 @@ test("slope", () => {
 });
 
 test("find_coeff", () => {
-    const funcToTest = vicaObj.screen3;
+    const funcToTest = vicaObj.screenDec;
     const [d, num] = arrObj.lastPointArr(0, funcToTest());
     const checker = checkErrorSmall(d, num, 0.35);
     checker(compObj.regressByFunc(funcToTest));

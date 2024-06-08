@@ -11,16 +11,12 @@ function allDec() {
     return arrObj.sortArr(arrObj.merge(iphoneObj.smsIphoneDec, xiaomiObj.xiaomiSmsDec, vicaObj.screenDec));
 }
 
-function screenJan() {
-    return arrObj.merge(vicaObj.screen1, vicaObj.screen2, vicaObj.screen3);
-}
-
 function allJan() {
-    return arrObj.merge(xiaomiObj.xiaomiSmsJan, screenJan);
+    return arrObj.merge(xiaomiObj.xiaomiSmsJan, vicaObj.screenJan);
 }
 
 function vicaApp() {
-    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, screenJan, vicaObj.allAfterFeb), -1);
+    return arrObj.chomp(arrObj.merge(vicaObj.screenDec, vicaObj.screenJan, vicaObj.allAfterFeb), -1);
 }
 
 function all2024() {
