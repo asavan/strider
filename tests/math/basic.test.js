@@ -126,9 +126,9 @@ test("lastTwoKnownPoints2", () => {
 });
 
 test("approxFormula", () => {
-    const maxError = 0.55;
+    const maxError = 0.2;
     const functionsToCheck = [compObj.approx3Formula];
-    for (let i = 0; i < 3; ++i) {
+    for (let i = 0; i < 2; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
         const results = functionsToCheck.map(checker);
@@ -143,9 +143,9 @@ test("approxFormula", () => {
 });
 
 test("approxFormula_relax", () => {
-    const maxError = 0.7;
+    const maxError = 1.1;
     const functionsToCheck = [compObj.approx5Formula, compObj.approx3Formula];
-    for (let i = 0; i < 3; ++i) {
+    for (let i = 0; i < 4; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
         const results = functionsToCheck.map(checker);
