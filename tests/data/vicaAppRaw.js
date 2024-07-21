@@ -76,6 +76,13 @@ function screenJune() {
     ];
 }
 
+function screenJuly() {
+    return [
+        ["10:30:11 04.07.2024", "11:09:56 05.07.2024", "15:40:22 21.07.2024"],
+        [20839486, 20897996, 21511634]
+    ];
+}
+
 const allAfterFeb = [
     screenFeb,
     screenFeb2,
@@ -83,7 +90,8 @@ const allAfterFeb = [
     screenMarch2,
     screenMarch3,
     screenApril,
-    screenJune
+    screenJune,
+    screenJuly
 ];
 
 export default {
