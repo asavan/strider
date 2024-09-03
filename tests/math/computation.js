@@ -40,7 +40,7 @@ function slope(f, ind1, ind2) {
 }
 
 function approx3Formula(date) {
-    const x = 0.59336;
+    const x = 0.5932;
     return mathObj.numPrediction([x, -1000000000], date);
 }
 

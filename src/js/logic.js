@@ -15,7 +15,7 @@ function numPrediction(slope, b, x) {
 }
 
 function calcNum(date) {
-    return numPrediction(0.59336, -1000000000, date.getTime()/1000);
+    return numPrediction(0.5932, -1000000000, date.getTime()/1000);
 }
 
 export default function emulator() {

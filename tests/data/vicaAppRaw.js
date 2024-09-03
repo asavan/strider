@@ -83,6 +83,17 @@ function screenJuly() {
     ];
 }
 
+function screenAugust() {
+    return [
+        [
+        "12:23:59 04.08.2024", "14:48:53 17.08.2024",
+        "20:31:12 26.08.2024", "11:25:23 30.08.2024",
+        "12:57:34 30.08.2024", "10:38:32 31.08.2024"
+        ],
+        [22127380, 22694777, 23079324, 23284625, 23292016, 23330900]
+    ];
+}
+
 const allAfterFeb = [
     screenFeb,
     screenFeb2,
@@ -91,7 +102,8 @@ const allAfterFeb = [
     screenMarch3,
     screenApril,
     screenJune,
-    screenJuly
+    screenJuly,
+    screenAugust
 ];
 
 export default {
