@@ -49,8 +49,8 @@ test("ordered", () => {
         const [times, nums] = dataFunc();
         assert.equal(times.length, nums.length);
         for (let i = 0; i < times.length; ++i) {
-            assert.ok(times[i] > prevTime, `${times[i]}, ${prevTime}, ${nums[i]}, ${prevNum}, ${dataFunc}`);
-            assert.ok(nums[i] > prevNum, `${times[i]}, ${prevTime}, ${nums[i]}, ${prevNum}, ${dataFunc}`);
+            assert.ok(times[i] >= prevTime, `${times[i]}, ${prevTime}, ${nums[i]}, ${prevNum}, ${dataFunc}`);
+            assert.ok(nums[i] >= prevNum, `${times[i]}, ${prevTime}, ${nums[i]}, ${prevNum}, ${dataFunc}`);
             prevTime = times[i];
             prevNum = nums[i];
         }

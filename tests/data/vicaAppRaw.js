@@ -94,6 +94,17 @@ function screenAugust() {
     ];
 }
 
+function screenSep() {
+    return [
+        [
+            "08:49:15 08.09.2024", "08:49:16 08.09.2024",
+            "08:49:16 08.09.2024", "09:31:41 09.09.2024",
+            "11:03:17 14.09.2024", "17:21:29 22.09.2024"
+        ],
+        [23723779, 23724134, 23724561, 23765342, 24119616, 24599628]
+    ];
+}
+
 const allAfterFeb = [
     screenFeb,
     screenFeb2,
@@ -103,7 +114,8 @@ const allAfterFeb = [
     screenApril,
     screenJune,
     screenJuly,
-    screenAugust
+    screenAugust,
+    screenSep
 ];
 
 export default {
