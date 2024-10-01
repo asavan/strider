@@ -106,6 +106,13 @@ function screenSep() {
     ];
 }
 
+function screenOct() {
+    return [
+        ["18:39:58 01.10.2024"],
+        [25173337]
+    ];
+}
+
 const allAfterFeb = [
     screenFeb,
     screenFeb2,
@@ -116,7 +123,8 @@ const allAfterFeb = [
     screenJune,
     screenJuly,
     screenAugust,
-    screenSep
+    screenSep,
+    screenOct
 ];
 
 export default {
