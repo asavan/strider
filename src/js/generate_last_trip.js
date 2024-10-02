@@ -4,7 +4,7 @@ import emulatorFunc from "./logic.js";
 
 function calcSmsDate(now, addMinutes) {
     const dayBegin = new Date(now.getTime());
-    dayBegin.setHours(0,0,0,0);
+    dayBegin.setHours(0, 0, 0, 0);
 
     const date = addMinutes(now, -(2*60 + 15));
     if (date < dayBegin) {
@@ -45,7 +45,7 @@ function generateAndRender(document, list, genFunc) {
     }
 }
 
-const a90GenAndRender =  (document, list) => generateAndRender(document, list, a90Generate);
+const a90GenAndRender = (document, list) => generateAndRender(document, list, a90Generate);
 
 function preventClick(document, list, f, ctr) {
     let count = 0;
@@ -85,7 +85,7 @@ function getFromStorageOrGenerate(window, settings) {
     return newInfo;
 }
 
-export default async function generate(window, document, settings) {
+export default function generate(window, document, settings) {
     const list = document.querySelector("main");
     generateAndRender(document, list, () => getFromStorageOrGenerate(window, settings));
     {

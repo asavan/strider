@@ -6,7 +6,7 @@ import interaction from "./interactive.js";
 
 
 function stringToBoolean(string){
-    switch(string.toLowerCase().trim()){
+    switch (string.toLowerCase().trim()){
     case "true": case "yes": case "1": return true;
     case "false": case "no": case "0": case null: return false;
     default: return Boolean(string);
@@ -31,6 +31,6 @@ export default async function starter(window, document) {
     parseSettings(window, document, settings);
     const dataUrl = "./data/default_sms.json";
     await loader(window, document, dataUrl);
-    await generate(window, document, settings);
+    generate(window, document, settings);
     interaction(window, document, settings);
 }

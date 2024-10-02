@@ -64,7 +64,7 @@ function isValidNumber(text) {
     for (let i = 0; i < text.length; ++i) {
         const symbol = text.charCodeAt(i);
         const asciiZero = 48; /* "0" */
-        if (symbol < asciiZero  || symbol > (asciiZero + 9) ) {
+        if (symbol < asciiZero || symbol > (asciiZero + 9) ) {
             // not digit
             return false;
         }

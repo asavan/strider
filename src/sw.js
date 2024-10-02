@@ -1,6 +1,6 @@
 /* eslint-env serviceworker */
 
-// eslint-disable-next-line no-undef
+
 const version = __SERVICE_WORKER_VERSION__;
 const CACHE = "cache-only-" + version;
 
