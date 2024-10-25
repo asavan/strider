@@ -13,7 +13,22 @@
           "type": " image/png"
         }
     ],
-    "theme_color": "#ffffff",
+  "screenshots": [
+    {
+      "src": "./images/screen1.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "label": "Homescreen of strider App"
+    },
+    {
+      "src": "./images/screen2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Homescreen of strider App"
+    }
+  ],
+  "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "start_url": "./",
     "display": "standalone"

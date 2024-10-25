@@ -36,11 +36,14 @@ async function processNormal(text, list, input, window, document, settings) {
     renderMessage(from, document, list);
 }
 
-function processNumber(text, window) {
+function processNumber(text, time, window) {
     const num = parseInt(text.slice(2), 10);
     const emulator = emulatorFunc();
     const now = new Date();
-    const date = emulator.addMinutes(now, -15);
+    let date = emulator.addMinutes(now, -15);
+    if (time) {
+        date = emulator.setTime(now, time);
+    }
 
     const to = { text: "C1", date: date, direction: "to"};
     const from = { text: emulator.C1Custom(date, num), date: date, direction: "from"};
@@ -79,9 +82,9 @@ function onSend(e, window, document, settings) {
     if (!input.value) {
         return;
     }
-    const text = input.value;
+    const [text, time] = input.value.split(" ");
     if (isValidNumber(text)) {
-        return processNumber(text, window);
+        return processNumber(text, time, window);
     }
     return processNormal(text, list, input, window, document, settings);
 }
