@@ -4,6 +4,14 @@
 const version = __SERVICE_WORKER_VERSION__;
 const CACHE = "cache-only-" + version;
 
+function delayReject(time) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            return reject(new Error("timeout"));
+        }, time);
+    });
+}
+
 self.addEventListener("install", (evt) => {
     evt.waitUntil(precache());
 });
@@ -29,11 +37,12 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-    evt.respondWith(networkOrCache(evt.request));
+    evt.respondWith(networkOrCache(evt.request, 500));
 });
 
-function networkOrCache(request) {
-    return fetch(request).then((response) => {
+function networkOrCache(request, timeout) {
+    const prom = [fetch(request), delayReject(timeout)];
+    return Promise.race(prom).then((response) => {
         if (response.ok) {
             return response;
         }
