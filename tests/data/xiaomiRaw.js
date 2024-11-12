@@ -22,9 +22,16 @@ function xiaomiSmsJan() {
     return [timesStr, nums];
 }
 
+function xiaomiSmsNov24() {
+    const timesStr = ["12:54:00 10.11.2024"];
+    const nums = [27508804];
+    return [timesStr, nums];
+}
+
 export default {
     xiaomiSmsSep,
     xiaomiSmsNov,
     xiaomiSmsDec,
-    xiaomiSmsJan
+    xiaomiSmsJan,
+    xiaomiSmsNov24
 };

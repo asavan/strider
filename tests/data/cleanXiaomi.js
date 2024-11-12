@@ -8,5 +8,6 @@ export default {
     xiaomiSmsSep: conv(rawObj.xiaomiSmsSep),
     xiaomiSmsNov: conv(rawObj.xiaomiSmsNov),
     xiaomiSmsDec: conv(rawObj.xiaomiSmsDec),
-    xiaomiSmsJan: conv(rawObj.xiaomiSmsJan)
+    xiaomiSmsJan: conv(rawObj.xiaomiSmsJan),
+    xiaomiSmsNov24: conv(rawObj.xiaomiSmsNov24)
 };

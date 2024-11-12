@@ -63,6 +63,10 @@ test("lastPoint", () => {
     console.log("lastPoint33", res);
 });
 
+test("allSize", () => {
+    console.log("allSize", dataObj.all()[0].length);
+});
+
 test("slope", () => {
     for (const dataFunc of dataObj.allFunctions) {
         const slope = compObj.slope(dataFunc(), 0, 0);
@@ -127,10 +131,8 @@ test("lastTwoKnownPoints2", () => {
     }
 });
 
-test("approxFormula", () => {
-    const maxError = 0.3;
-    const functionsToCheck = [compObj.approx3Formula];
-    for (let i = 0; i < 3; ++i) {
+function checkLastPoints(functionsToCheck, maxError, pointsCount, label) {
+    for (let i = 0; i < pointsCount; ++i) {
         const [d, num] = dataObj.lastPoint(i);
         const checker = checkErrorSmall(d, num, maxError);
         const results = functionsToCheck.map(checker);
@@ -140,25 +142,29 @@ test("approxFormula", () => {
             const percent = diff1 * 100 / num;
             return percent;
         });
-        console.log("approxFormula", results, diff, percents);
+        console.log(label, results, diff, percents);
     }
+}
+
+test("approxFormula", () => {
+    const maxError = 0.3;
+    const pointsCount = 3;
+    const functionsToCheck = [compObj.approx3Formula];
+    checkLastPoints(functionsToCheck, maxError, pointsCount, "approxFormula");
+});
+
+test("approxFormula_long", () => {
+    const maxError = 2.6;
+    const pointsCount = 65;
+    const functionsToCheck = [compObj.approx3Formula];
+    checkLastPoints(functionsToCheck, maxError, pointsCount, "approxFormula_long");
 });
 
 test("approxFormula_relax", () => {
     const maxError = 1.1;
+    const pointsCount = 3;
     const functionsToCheck = [compObj.approx5Formula, compObj.approx3Formula];
-    for (let i = 0; i < 3; ++i) {
-        const [d, num] = dataObj.lastPoint(i);
-        const checker = checkErrorSmall(d, num, maxError);
-        const results = functionsToCheck.map(checker);
-        const diff = results.map(res => num - res);
-        const percents = results.map(res => {
-            const diff1 = num - res;
-            const percent = diff1 * 100 / num;
-            return percent;
-        });
-        console.log("approxFormula_relax", results, diff, percents);
-    }
+    checkLastPoints(functionsToCheck, maxError, pointsCount, "approxFormula_relax");
 });
 
 test("correctMathAllPoints", () => {

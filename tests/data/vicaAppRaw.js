@@ -1,3 +1,6 @@
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenDec() {
     return [
         ["12:07:45 17.12.2023", "13:25:03 25.12.2023", "16:52:34 25.12.2023",
@@ -6,6 +9,9 @@ function screenDec() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screen1() {
     return [
         ["14:44:04 03.01.2024", "17:42:30 03.01.2024", "18:39:24 04.01.2024"],
@@ -13,6 +19,9 @@ function screen1() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screen2() {
     return [
         ["17:18:45 08.01.2024", "19:48:36 08.01.2024", "17:55:02 10.01.2024", "19:42:15 10.01.2024"],
@@ -20,6 +29,9 @@ function screen2() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screen3() {
     return [
         ["17:53:12 13.01.2024", "18:52:02 22.01.2024", "20:42:14 22.01.2024", "17:54:28 24.01.2024"],
@@ -27,6 +39,9 @@ function screen3() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenFeb() {
     return [
         ["18:56:55 01.02.2024", "20:48:23 01.02.2024", "18:00:00 13.02.2024", "16:39:16 17.02.2024"],
@@ -34,6 +49,9 @@ function screenFeb() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenFeb2() {
     return [
         ["09:45:57 20.02.2024", "11:17:19 20.02.2024", "17:36:57 27.02.2024"],
@@ -41,6 +59,9 @@ function screenFeb2() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenMarch() {
     return [
         ["17:09:13 08.03.2024"],
@@ -48,6 +69,9 @@ function screenMarch() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenMarch2() {
     return [
         ["17:45:43 11.03.2024", "19:29:29 11.03.2024", "18:01:09 14.03.2024", "11:35:56 16.03.2024"],
@@ -55,6 +79,9 @@ function screenMarch2() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenMarch3() {
     return [
         ["11:58:37 17.03.2024", "16:44:35 17.03.2024", "16:55:36 23.03.2024", "20:03:24 23.03.2024"],
@@ -62,6 +89,9 @@ function screenMarch3() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenApril() {
     return [
         ["07:59:34 09.04.2024", "13:43:40 11.04.2024", "20:09:46 18.04.2024", "18:45:09 20.04.2024"],
@@ -76,6 +106,9 @@ function screenJune() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenJuly() {
     return [
         ["10:30:11 04.07.2024", "11:09:56 05.07.2024", "15:40:22 21.07.2024"],
@@ -83,6 +116,9 @@ function screenJuly() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenAugust() {
     return [
         [
@@ -94,6 +130,9 @@ function screenAugust() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenSep() {
     return [
         [
@@ -106,6 +145,9 @@ function screenSep() {
     ];
 }
 
+/**
+ * @returns {[string[], number[]]}
+ */
 function screenOct() {
     return [
         [
@@ -117,11 +159,10 @@ function screenOct() {
     ];
 }
 
-//  tac scratch_16.txt | cut -d ' ' -f 2 | tr "\\n" ','
-//  tac scratch_16.txt | cut -d ' ' -f 2 | sed 's/$/,/'
-//  tac scratch_16.txt | cut -d ' ' -f 5,6 | sed 's/^/"/;s/$/",/'
-
-function screenNov2024() {
+/**
+ * @returns {[string[], number[]]}
+ */
+function screenOct2() {
     return [
         [
             "11:31:38 26.10.2024",
@@ -131,6 +172,21 @@ function screenNov2024() {
             "19:51:24 29.10.2024",
             "17:43:39 31.10.2024",
             "21:09:03 31.10.2024",
+        ],
+        [26691648, 26716752, 26735650, 26878323, 26883204, 27025880, 27033757]
+    ];
+}
+
+//  tac scratch_16.txt | cut -d ' ' -f 2 | tr "\\n" ','
+//  tac scratch_16.txt | cut -d ' ' -f 2 | sed 's/$/,/'
+//  tac scratch_16.txt | cut -d ' ' -f 5,6 | sed 's/^/"/;s/$/",/'
+
+/**
+ * @returns {[string[], number[]]}
+ */
+function screenNov2024() {
+    return [
+        [
             "20:06:34 02.11.2024",
             "17:57:30 05.11.2024",
             "19:48:14 05.11.2024",
@@ -141,13 +197,16 @@ function screenNov2024() {
             "12:54:11 10.11.2024"
         ],
         [
-            26691648, 26716752, 26735650, 26878323, 26883204,
-            27025880, 27033757, 27149667, 27321603, 27325999,
-            27464011, 27469406, 27569332, 27572651, 27585206
+            27149667, 27321603, 27325999, 27464011,
+            27469406, 27569332, 27572651, 27585206
         ]
     ];
 }
 
+/**
+ *
+ * @type {(function(): [string[], number[]])[]}
+ */
 const allAfterFeb = [
     screenFeb,
     screenFeb2,
@@ -160,19 +219,14 @@ const allAfterFeb = [
     screenAugust,
     screenSep,
     screenOct,
+    screenOct2,
     screenNov2024
 ];
 
+const screenJan = [screen1, screen2, screen3];
+
 export default {
     screenDec,
-    screen1,
-    screen2,
-    screen3,
-    screenFeb,
-    screenFeb2,
-    screenMarch,
-    screenMarch2,
-    screenMarch3,
-    screenApril,
+    screenJan,
     allAfterFeb
 };

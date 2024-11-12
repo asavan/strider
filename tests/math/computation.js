@@ -35,12 +35,11 @@ function regressByFunc2(dataFunc, needLog) {
 function slope(f, ind1, ind2) {
     const [dBeg, numBeg] = arrObj.pointFromArr(ind1, f);
     const [dEnd, numEnd] = arrObj.lastPointArr(ind2, f);
-    const slope1 = (numEnd - numBeg) / (dEnd - dBeg);
-    return slope1;
+    return (numEnd - numBeg) / (dEnd - dBeg);
 }
 
 function approx3Formula(date) {
-    const x = 0.5936;
+    const x = 0.59353;
     return mathObj.numPrediction([x, -1000000000], date);
 }
 

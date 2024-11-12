@@ -44,7 +44,7 @@ function chomp(arr, num) {
 }
 
 function lastK(arr, k) {
-    if (k == 0) {
+    if (k === 0) {
         return [[], []];
     }
 

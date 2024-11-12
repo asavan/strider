@@ -6,6 +6,6 @@ const conv = arrObj.transformTimeFunc(dateObj.toUnixTimeStamp);
 
 export default {
     screenDec: conv(rawObj.screenDec),
-    screenJan: conv(() => arrObj.merge(rawObj.screen1, rawObj.screen2, rawObj.screen3)),
+    screenJan: conv(() => arrObj.merge(...rawObj.screenJan)),
     allAfterFeb: conv(() => arrObj.merge(...rawObj.allAfterFeb))
 };
