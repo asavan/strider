@@ -118,6 +118,7 @@ function screenOct() {
 }
 
 //  tac scratch_16.txt | cut -d ' ' -f 2 | tr "\\n" ','
+//  tac scratch_16.txt | cut -d ' ' -f 2 | sed 's/$/,/'
 //  tac scratch_16.txt | cut -d ' ' -f 5,6 | sed 's/^/"/;s/$/",/'
 
 function screenNov2024() {
