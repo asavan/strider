@@ -1,18 +1,18 @@
 function findLineByLeastSquares(values_x, values_y) {
-    var x_sum = 0;
-    var y_sum = 0;
-    var xy_sum = 0;
-    var xx_sum = 0;
-    var count = 0;
+    let x_sum = 0;
+    let y_sum = 0;
+    let xy_sum = 0;
+    let xx_sum = 0;
+    let count = 0;
 
     /*
      * The above is just for quick access, makes the program faster
      */
-    var x = 0;
-    var y = 0;
-    var values_length = values_x.length;
+    let x;
+    let y;
+    const values_length = values_x.length;
 
-    if (values_length != values_y.length) {
+    if (values_length !== values_y.length) {
         throw new Error("The parameters values_x and values_y need to have same size!");
     }
 
@@ -36,7 +36,7 @@ function findLineByLeastSquares(values_x, values_y) {
         count++;
     }
 
-    if (values_length != count) {
+    if (values_length !== count) {
         throw new Error("Count error");
     }
 

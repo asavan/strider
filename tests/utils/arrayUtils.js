@@ -24,7 +24,7 @@ function transformTimeFunc(transformFunc) {
 
 function sortArr(arr) {
     const [times, nums] = arr;
-    const temp = times.map((el, i) => { return {time: el, num: nums[i]};});
+    const temp = times.map((el, i) => ({time: el, num: nums[i]}));
     temp.sort((el1, el2) => el1.time - el2.time);
     const time2 = temp.map(el => el.time);
     const nums2 = temp.map(el => el.num);

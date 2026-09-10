@@ -25,7 +25,8 @@ function checkErrorSmall(d, num, thresholdPercent) {
         const res = f(d);
         const diff = res - num;
         const percent = diff * 100 / num;
-        assert.ok(Math.abs(percent) < thresholdPercent, `${percent} ${thresholdPercent} ${dateObj.fromSeconds(d)} ${res} ${num} ${f}`);
+        assert.ok(Math.abs(percent) < thresholdPercent,
+            `${percent} ${thresholdPercent} ${dateObj.fromSeconds(d)} ${res} ${num} ${f}`);
         return res;
     };
 }

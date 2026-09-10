@@ -11,7 +11,7 @@ test("toUnixTimeStamp", () => {
 });
 
 test("parseInput", () => {
-    let time = "1102";
+    const time = "1102";
     const len = time.length;
     const hourPart = time.substring(0, len-2);
     const minutePart = time.substring(len-2);
