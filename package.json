@@ -19,6 +19,8 @@
     "updates:fix": "npx ncu -u && npm install && npm audit fix"
   },
   "devDependencies": {
-    "devdeps": "github:asavan/dev-deps#v0.3.1"
+    "dayjs": "^1.11.23",
+    "devdeps": "github:asavan/dev-deps#v0.3.1",
+    "luxon": "^3.7.2"
   }
 }
